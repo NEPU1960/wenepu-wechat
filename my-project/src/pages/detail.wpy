@@ -1,0 +1,171 @@
+<style lang="less">
+  @import "../less/config";
+  page {
+    width: 100%;
+    height: 100%;
+    background: @bg-color;
+  }
+  .header {
+    margin-bottom: 20rpx;
+    .info {
+      margin-top: 20rpx;
+      margin-bottom: 20rpx;
+      color: #888;
+      font-size: 26rpx;
+      display: flex;
+      flex-wrap: wrap;
+      .time {
+        > view {
+          margin-right: 6rpx;
+        }
+      }
+      > view {
+        display: flex;
+        align-items: baseline;
+        margin-right: 10rpx;
+        margin-bottom: 10rpx;
+      }
+      .tag {
+        margin-right: 10rpx;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  .details {
+    margin: 0.2rem;
+    padding: 0.5rem;
+    margin-bottom: 120rpx;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.1rem;
+  }
+  .wxParse-tr {
+    height: auto !important;
+    border-bottom: 1px dashed #ccc !important;
+    align-items: flex-start !important;
+    .wxParse-td,
+    .wxParse-th {
+      border: none !important;
+      height: auto !important;
+    }
+  }
+  .wxParse-img {
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+    background-color: transparent;
+  }
+  .content.news {
+    view {
+      line-height: 150% !important;
+      font-size: 1rem !important;
+    }
+    .wxParse-img {
+      margin: 0 auto;
+      width: 100%;
+      display: block;
+      min-height: 400rpx;
+      background-color: transparent;
+    }
+  }
+  .footer {
+    margin-top: 2rem;
+    font-size: 24rpx;
+    color: #888;
+  }
+  button.tab {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+    font-size: 0rpx;
+    line-height: normal;
+    &::after {
+      content: "";
+      width: 0;
+      height: 0;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      display: none;
+      background-color: transparent;
+    }
+  }
+  .tabs {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    line-height: normal;
+    width: 100%;
+    height: 90rpx;
+    margin: 0;
+    background: #fff;
+    .tab {
+      line-height: normal;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: @base-color;
+      border: none;
+      flex: 1;
+      background: #fff;
+      border: none;
+      border-radius: 0;
+      width: 100%;
+      .iconfont {
+        font-size: 38rpx;
+      }
+      .tab-name {
+        font-size: 24rpx;
+      }
+    }
+  }
+  ad {
+    margin-top: 20rpx;
+    border-radius: 6rpx;
+  }
+</style>
+
+<template>
+  <view class="details">
+    <view class="content">
+      <htmlParser :parserName="name" :parserContent.sync="content" />
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import htmlparser from "components/htmlparser";
+  export default class Details extends wepy.page {
+    config = {};
+    components = {
+      htmlParser: htmlparser,
+    };
+    data = {
+      title: "新媒体",
+      content: "1",
+      name: "123",
+      url: "1",
+      time: "1",
+      from: "news",
+      tags: ["1"],
+      shareOption: {
+        title: "新媒体1",
+        content: "1",
+        from: "1",
+        params: "1"
+      }
+    };
+  }
+</script>
+

@@ -14,10 +14,16 @@ module.exports = {
   },
   resolve: {
     alias: {
-      counter: path.join(__dirname, 'src/components/counter'),
-      '@': path.join(__dirname, 'src')
+      '@': path.join(__dirname, 'src'),
+      'components': path.join(__dirname, 'src/components'),
+      'mixins': path.join(__dirname, 'src/mixins'),
+      'util': path.join(__dirname, 'src/util'),
+      'config': path.join(__dirname, 'src/config'),
+      'less': path.join(__dirname, 'src/less'),
+      'icon': path.join(__dirname, 'src/icon'),
+      'plugins': path.join(__dirname, 'src/plugins')
     },
-    aliasFields: ['wepy', 'weapp'],
+    // aliasFields: ['wepy', 'weapp'],
     modules: ['node_modules']
   },
   compilers: {
@@ -51,6 +57,10 @@ if (prod) {
 
   // 压缩sass
   // module.exports.compilers['sass'] = {outputStyle: 'compressed'}
+  // 压缩less
+  module.exports.compilers['less'] = {
+    compress: true
+  }
 
   // 压缩js
   module.exports.plugins = {

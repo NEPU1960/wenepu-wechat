@@ -1,0 +1,44 @@
+<style lang="less">
+
+.lists {
+  padding: 0.5rem;
+  background: #fff;
+  min-height: 150rpx;
+  border-bottom: 2rpx solid #ededed;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: wrap;
+  color: #555;
+  .title {
+    width: 100%;
+    font-size: 28rpx;
+  }
+  .info {
+    color: #999;
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: 24rpx;
+    display: flex;
+    justify-content: space-between;
+    text {
+      display: inline-block;
+      margin-right: 0.2rem;
+    }
+  }
+}
+</style>
+<template>
+  <view class="lists">
+    <view class="title">
+      测试文章标题
+    </view>
+    <view class="info">
+        <view class="tag">
+          #新闻网#
+        </view>
+        <view class="time">
+          2019-04-03
+        </view>
+    </view>
+  </view>
+</template>
