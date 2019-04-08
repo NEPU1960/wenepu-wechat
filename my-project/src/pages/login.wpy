@@ -1,0 +1,316 @@
+<template>
+  <!--login.wxml-->
+  <view class="container">
+    <view class="remind-box" wx:if="{{remind}}">
+      <image class="remind-img" src="/images/index/loading.gif"/>
+    </view>
+    <block wx:else>
+      <image class="title" src="/images/more/title.png"></image>
+      <view class="content">
+        <view class="hd" style="transform:rotateZ({{angle}}deg);">
+          <image class="logo" src="/images/more/logo.png"></image>
+          <image class="wave" src="/images/more/wave.png" mode="aspectFill"></image>
+          <image class="wave wave-bg" src="/images/more/wave.png" mode="aspectFill"></image>
+        </view>
+        <view class="bd">
+          <form class="login-form">
+            <view class="input-group {{userid_focus ? 'active' : ''}}">
+              <text class="input-label">帐号</text>
+              <input type="number" cursor-spacing="30" id="userid" maxlength="7" placeholder="请输入统一认证码" bindinput="useridInput" bindfocus="inputFocus" bindblur="inputBlur" />
+            </view>
+            <view class="input-group {{passwd_focus ? 'active' : ''}}">
+              <text class="input-label">密码</text>
+              <input password="true" cursor-spacing="30" id="passwd" placeholder="初始密码为身份证后6位" bindinput="passwdInput" bindfocus="inputFocus" bindblur="inputBlur" />
+            </view>
+            <view class="login-help" bindtap="showHelp">
+              <text>帮助</text>
+              <image class="login-help-img" src="/images/more/help.png"></image>
+            </view>
+          </form>
+          <view class="confirm-btn" bindtap="bind">
+            <text>确认绑定</text>
+          </view>
+        </view>
+
+        <view class="help" id="help" wx:if="{{help_status}}" bindtap="tapHelp">
+          <view class="box">
+            <view class="box-hd">
+              <text class="box-title">帮助</text>
+              <image class="box-close" src="/images/more/close.png" bindtap="hideHelp"></image>
+            </view>
+            <view class="box-bd">
+              <view class="help-q">1、帐号和密码是什么？</view>
+              <view class="help-a">
+                <text>帐号：统一认证码（校园一卡通卡号）</text>
+                <text>密码：初始密码或者已更改密码</text>
+                <text>其中初始密码与个人身份证号码相关，采用以下规则：①身份证号码：取最后6位作为密码；②身份证号码最后一位是x的默认大写；③无居民身份证的人员（如国外留学生等），密码与统一认证码相同</text>
+              </view>
+              <view class="help-q">2、忘记密码？</view>
+              <view class="help-a">
+                <text>请访问统一身份认证平台（https://ids.cqupt.edu.cn）进行忘记密码操作</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </block>
+
+  </view>
+</template>
+<style lang="less">
+  /**login.wxss**/
+  .container {
+    background: #0188ac;
+    align-items: stretch;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  .content{
+    flex: 1;
+    display: flex;
+    position: relative;
+    z-index: 10;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 450rpx;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(244,244,244,0)), color-stop(0.1, #f4f4f4), to(#f4f4f4));
+    opacity: 0;
+    transform: translate3d(0,100%,0);
+    animation: rise 3s cubic-bezier(0.19, 1, 0.22, 1) .25s forwards;
+  }
+  @keyframes rise{
+    0% {opacity: 0;transform: translate3d(0,100%,0);}
+    50% {opacity: 1;}
+    100% {opacity: 1;transform: translate3d(0,450rpx,0);}
+  }
+  .title{
+    position: absolute;
+    top: 30rpx;
+    left: 50%;
+    width: 600rpx;
+    height: 200rpx;
+    margin-left: -300rpx;
+    opacity: 0;
+    animation: show 2.5s cubic-bezier(0.19, 1, 0.22, 1) .5s forwards;
+  }
+  @keyframes show{
+    0% {opacity: 0;}
+    100% {opacity: .95;}
+  }
+
+  .hd {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1000rpx;
+    margin-left: -500rpx;
+    height: 200rpx;
+    transition: all .35s ease;
+  }
+  .logo {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 200rpx;
+    width: 180rpx;
+    height: 180rpx;
+    margin-left: -80rpx;
+    border-radius: 160rpx;
+    animation: sway 10s ease-in-out infinite;
+    opacity: .95;
+  }
+  @keyframes sway{
+    0% {transform: translate3d(0,20rpx,0) rotate(-15deg); }
+    17% {transform: translate3d(0,0rpx,0) rotate(25deg); }
+    34% {transform: translate3d(0,-20rpx,0) rotate(-20deg); }
+    50% {transform: translate3d(0,-10rpx,0) rotate(15deg); }
+    67% {transform: translate3d(0,10rpx,0) rotate(-25deg); }
+    84% {transform: translate3d(0,15rpx,0) rotate(15deg); }
+    100% {transform: translate3d(0,20rpx,0) rotate(-15deg); }
+  }
+  .wave {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    bottom: 0;
+    opacity: 0.725;
+    height: 260rpx;
+    width: 2250rpx;
+    animation: wave 10s linear infinite;
+  }
+  .wave-bg {
+    z-index: 1;
+    animation: wave-bg 10.25s linear infinite;
+  }
+  @keyframes wave{
+    from {transform: translate3d(125rpx,0,0);}
+    to {transform: translate3d(1125rpx,0,0);}
+  }
+  @keyframes wave-bg{
+    from {transform: translate3d(375rpx,0,0);}
+    to {transform: translate3d(1375rpx,0,0);}
+  }
+
+  .bd {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    animation: bd-rise 2s cubic-bezier(0.23,1,0.32,1) .75s forwards;
+    opacity: 0;
+  }
+  @keyframes bd-rise{
+    from {opacity: 0; transform: translate3d(0,60rpx,0); }
+    to {opacity: 1; transform: translate3d(0,0,0); }
+  }
+  form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .input-group {
+    display: flex;
+    align-items: center;
+    padding: 25rpx 10rpx;
+    margin: 40rpx 3%;
+    background: #fff;
+    border-radius: 5px;
+    border: 2px solid #f4f4f4;
+    transition: all .25s ease-in-out;
+  }
+  .input-group.active {
+    border: 2px solid #0188ac;
+  }
+  .input-label {
+    color: #888;
+    font-size: 13pt;
+    height: 25rpx;
+    line-height: 25rpx;
+    padding: 0 25rpx;
+    border-right: 1px solid #d8d8d8;
+  }
+  .input-group input,
+  .input-group picker {
+    flex: 1;
+    font-size: 13pt;
+    min-height: 52rpx;
+    height: 52rpx;
+    line-height: 52rpx;
+    padding: 0 25rpx;
+  }
+  .input-placeholder,
+  .input-group picker.placeholder {
+    color: #ccc;
+  }
+  .login-help {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 30rpx;
+    font-size: 10pt;
+    color: #bbb;
+  }
+  .login-help-img {
+    width: 11pt;
+    height: 11pt;
+    margin: 0 5rpx;
+  }
+  .confirm-btn {
+    font-size: 13pt;
+    line-height: 85rpx;
+    height: 85rpx;
+    background: #0188ac;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    margin: 50rpx 3%;
+  }
+  .confirm-btn:active {
+    opacity: .8;
+  }
+  .help {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 80%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(22,22,22,.35);
+    transform: translate3d(0,-400rpx,0);
+  }
+  .box-hd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100rpx;
+    border-bottom: 1px solid #eee;
+  }
+  .box-title {
+    font-size: 13pt;
+  }
+  .box-close {
+    position: absolute;
+    right: 20rpx;
+    width: 35rpx;
+    height: 35rpx;
+    padding: 15rpx;
+  }
+  .box-bd {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15rpx 40rpx 30rpx;
+  }
+  .help-q {
+    color: #999;
+    font-size: 11pt;
+    line-height: 200%;
+    margin-top: 5rpx;
+  }
+  .help-a {
+    text-indent: 1em;
+    line-height: 160%;
+    display: flex;
+    flex-direction: column;
+  }
+  .help-a text{
+    word-break: break-all;
+  }
+  /**登录动画**/
+  .login_video{
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 750rpx;
+    margin-left: -375rpx;
+    height: 1334rpx;
+    margin-top: -667rpx;
+  }
+  .video_hidden{
+    visibility: hidden;
+  }
+  page .wx-video-bar{
+    display: none;
+  }
+</style>
