@@ -1,0 +1,28 @@
+<style lang="less">
+  .week{
+    display: flex;
+    font-size: 45rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="week">
+      <text>一</text>
+      <text>二</text>
+      <text>三</text>
+      <text>四</text>
+      <text>五</text>
+      <text>六</text>
+      <text>日</text>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy';
+
+  export default class schedule extends wepy.page{
+    data={
+
+    }
+  }
+</script>
