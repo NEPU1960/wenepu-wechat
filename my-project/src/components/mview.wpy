@@ -39,8 +39,8 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import HttpMixin from 'mixins/http'
+  import wepy from 'wepy';
+  import HttpMixin from 'mixins/http';
   export default class MView extends wepy.component {
     props = {
       args: {

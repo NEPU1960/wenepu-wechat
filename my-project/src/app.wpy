@@ -16,9 +16,9 @@
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
-import Http from "./util/http";
-import db from "./util/db";
-import Login from "./util/login";
+// import Http from "./util/http";
+// import db from "./util/db";
+// import Login from "./util/login";
 import { setStore } from 'wepy-redux'
 import configStore from './store'
 
@@ -28,13 +28,11 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
+      "pages/index",
       'pages/newsLists',
       'pages/my',
-
       'pages/login',
       'pages/schedule',
-      'pages/detail',
     ],
     window: {
       backgroundTextStyle: 'light',
