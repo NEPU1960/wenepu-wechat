@@ -1,4 +1,8 @@
 <style lang="less">
+
+@import "./icon/iconfont";
+@import "./less/config";
+@import "./less/app";
 .container {
   height: 100%;
   display: flex;
@@ -10,9 +14,11 @@
 </style>
 
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
-
+import wepy from "wepy";
+import "wepy-async-function";
+import Http from "./util/http";
+import db from "./util/db";
+import Login from "./util/login";
 import { setStore } from 'wepy-redux'
 import configStore from './store'
 
@@ -22,19 +28,50 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/index',
+      'pages/newsLists',
+      'pages/my/my',
       'pages/login',
       'pages/schedule',
       'pages/detail',
-      'pages/newslist',
-      'pages/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: 'We东油',
       navigationBarTextStyle: 'black'
-    }
-  }
+    },
+  //   tabBar: {
+  //     selectedColor: "#3e9ecf",
+  //     color: "#707070",
+  //     list: [
+  //       {
+  //         pagePath: "pages/index",
+  //         text: "首页",
+  //         iconPath: "icon/home.png",
+  //         selectedIconPath: "icon/home@select.png"
+  //       },
+  //       // {
+  //       //   pagePath: "pages/course/lists",
+  //       //   text: "寻课",
+  //       //   iconPath: "icon/course.png",
+  //       //   selectedIconPath: "icon/course@select.png"
+  //       // },
+  //       {
+  //         pagePath: "pages/newsLists",
+  //         text: "资讯",
+  //         iconPath: "icon/news.png",
+  //         selectedIconPath: "icon/news@select.png"
+  //       },
+  //       {
+  //         pagePath: "pages/my/my",
+  //         text: "个人中心",
+  //         iconPath: "icon/user.png",
+  //         selectedIconPath: "icon/user@select.png"
+  //       }
+  //     ]
+  //   }
+  // }
 
   globalData = {
     userInfo: null

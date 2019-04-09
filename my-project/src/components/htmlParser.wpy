@@ -1,5 +1,5 @@
 <template>
-  <import src="./wxParse/wxParse.wxml" />
+  <import src="/plugins/wxParse/wxParse.wxml" />
   <block wx:for="{{htmlParserTpl.nodes}}" wx:key="{{index}}">
     <template is="wxParse0" data="{{item}}" />
   </block>
@@ -7,7 +7,7 @@
 
 <script>
   import wepy from 'wepy'
-  import WxParse from '../wxParse/wxParse'
+  import WxParse from '../plugins/wxParse/wxParse'
   export default class HTMLParser extends wepy.component {
     props = {
       parserName: {
@@ -72,5 +72,5 @@
 </script>
 
 <style lang="less">
-  @import "./wxParse.wxss";
+  @import "../plugins/wxParse/wxParse.wxss";
 </style>
