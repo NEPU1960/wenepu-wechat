@@ -2,7 +2,6 @@ import {
   domain
 } from '../config'
 import db from './db'
-
 export default class Http {
   static Get(url, params = {}, isShow = true, handler = {}) {
     return request('GET', url, params, isShow, handler)
@@ -19,6 +18,7 @@ const ShowToast = (msg, type = 'error', time = 2000) => {
     duration: time
   })
 }
+
 
 function request(method, url, params = {}, isShow = true, handler = {}) {
   handler.url = domain + url

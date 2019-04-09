@@ -14,6 +14,7 @@
         type: String,
         default: 'htmlParserName'
       },
+
       parserContent: {
         type: String,
         default: '<p style=\'font-size: 32rpx; padding: 30rpx 0; text-align: center;\'>没有任何内容</p>'

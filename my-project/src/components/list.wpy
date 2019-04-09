@@ -69,7 +69,7 @@ import HttpMixin from "mixins/http";
 import ToastMixin from "mixins/toast";
 import Empty from "components/empty";
 import ADConfig from "util/ad";
-export default class List extends wepy.page {
+export default class List extends wepy.component {
   mixins = [HttpMixin, ToastMixin];
   components = {
     empty: Empty

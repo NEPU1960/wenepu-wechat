@@ -30,7 +30,8 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/newsLists',
-      'pages/my/my',
+      'pages/my',
+
       'pages/login',
       'pages/schedule',
       'pages/detail',
@@ -40,38 +41,8 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'We东油',
       navigationBarTextStyle: 'black'
-    },
-  //   tabBar: {
-  //     selectedColor: "#3e9ecf",
-  //     color: "#707070",
-  //     list: [
-  //       {
-  //         pagePath: "pages/index",
-  //         text: "首页",
-  //         iconPath: "icon/home.png",
-  //         selectedIconPath: "icon/home@select.png"
-  //       },
-  //       // {
-  //       //   pagePath: "pages/course/lists",
-  //       //   text: "寻课",
-  //       //   iconPath: "icon/course.png",
-  //       //   selectedIconPath: "icon/course@select.png"
-  //       // },
-  //       {
-  //         pagePath: "pages/newsLists",
-  //         text: "资讯",
-  //         iconPath: "icon/news.png",
-  //         selectedIconPath: "icon/news@select.png"
-  //       },
-  //       {
-  //         pagePath: "pages/my/my",
-  //         text: "个人中心",
-  //         iconPath: "icon/user.png",
-  //         selectedIconPath: "icon/user@select.png"
-  //       }
-  //     ]
-  //   }
-  // }
+    }
+  }
 
   globalData = {
     userInfo: null
