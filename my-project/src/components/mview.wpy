@@ -40,7 +40,7 @@
 
 <script>
   import wepy from 'wepy';
-  import HttpMixin from 'mixins/http';
+  // import HttpMixin from 'mixins/http';
   export default class MView extends wepy.component {
     props = {
       args: {
@@ -64,9 +64,9 @@
           console.log("现在处于微信开发者工具！");
           return
         }
-        this.POST("/user/msg_id", {
-          "ids": e.detail.formId
-        }, false)
+        // this.POST("/user/msg_id", {
+        //   "ids": e.detail.formId
+        // }, false)
       }
     }
   }

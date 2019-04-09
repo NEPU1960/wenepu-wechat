@@ -1,7 +1,12 @@
 <style lang="less">
   @import "./src/less/config.less";
   page {
-    background: @bg-color;
+    padding-bottom: 0;
+    background-color: #f0eff5;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom center;
+    background-image:url('http://nepunmc.cn/wenepu/back.png');
   }
   .func {
     background: #fff;
@@ -91,86 +96,72 @@
       </block>
     </swiper>
     <!-- 功能区 -->
-    <view class="func">
-      <view class="func-row">
-        <repeat for="{{funcs}}" item="item" key="index">
-          <mview @mtap.user="to" class="mview {{item.type}} {{verify === 1 ? '' : 'no-verify'}}" :arg.sync="item">
-            <view class="icon-btn" slot="content">
-              <image class="icon" src="/icon/index/{{item.icon}}.svg"></image>
-              <text>{{item.name}}</text>
-            </view>
-          </mview>
-        </repeat>
-      </view>
-    </view>
+<!--    <view class="func">-->
+<!--      <view class="func-row">-->
+<!--        <repeat for="{{funcs}}" item="item" key="index">-->
+<!--          <mview @mtap.user="to" class="mview {{item.type}} {{verify === 1 ? '' : 'no-verify'}}" :arg.sync="item">-->
+<!--            <view class="icon-btn" slot="content">-->
+<!--              <image class="icon" src="/icon/index/{{item.icon}}.svg"></image>-->
+<!--              <text>{{item.name}}</text>-->
+<!--            </view>-->
+<!--          </mview>-->
+<!--        </repeat>-->
+<!--      </view>-->
+<!--    </view>-->
 
-    <!-- 卡片区, 置放通知卡片, 例如: 成绩通知, 课程通知, 自习教室, 考试通知 -->
+<!--     卡片区, 置放通知卡片, 例如: 成绩通知, 课程通知, 自习教室, 考试通知-->
 <!--    <view wx:if="{{jwc_verify > 0}}">-->
-<!--      <schedule-card iconBg="#eacdd1" icon="kechengbiao" title="今日课表" bg="card-schedule.png" :isShow.sync="todaySchedules" footText="查看完整课表" url="/pages/schedule" noneText="今日无课">-->
-<!--        <block slot="content" wx:for="{{todaySchedules}}" wx:if="{{item.course_name}}" wx:key="{{index}}">-->
-<!--          <view class="card-list">-->
-<!--            <view class="card-left">-->
-<!--              <text class="class-name">{{item.course_name}}</text>-->
-<!--              <text class="class-info">{{item.sessionArr[0]}}~{{item.sessionArr[item.flex-1]}}</text>-->
-<!--            </view>-->
-<!--            <view class="card-right">-->
-<!--              <text>{{item.address}}</text>-->
-<!--            </view>-->
-<!--          </view>-->
-<!--        </block>-->
-<!--      </schedule-card>-->
-<!--      <ecard :isShow.sync="ecardBalance" footText="查看交易流水" icon="card" bg="card-ecard.png" title="一卡通余额" url="/pages/ecard" iconBg="#b92c18">-->
-<!--        <view class="ecard" slot="content">-->
-<!--          {{ecardBalance[0]}}-->
-<!--        </view>-->
-<!--      </ecard>-->
-<!--      <book-card iconBg="#ab96c5" icon="book" bg="card-library.png" title="我的借阅" :isShow.sync="loanBooks" footText="查看所有借阅" url="/pages/library/loan" noneText="无借阅书籍">-->
-<!--        <block slot="content" wx:for="{{loanBooks}}" wx:key="{{index}}">-->
-<!--          <view wx:if="{{item.title && index < 3}}" class="card-list">-->
-<!--            <view class="card-left">-->
-<!--              <text class="class-name">{{item.title}}</text>-->
-<!--            </view>-->
-<!--            <view class="card-right">-->
-<!--              <text>{{item.due_date}}</text>-->
-<!--            </view>-->
-<!--          </view>-->
-<!--        </block>-->
-<!--      </book-card>-->
-<!--      <exam-card iconBg="#2578b5" bg="card-exam.png" icon="exam" title="考表" :isShow.sync="exams" footText="查看完整考表" url="/pages/exam" noneText="近期没有考试">-->
-<!--        <block slot="content" wx:for="{{exams}}" wx:key="{{index}}">-->
-<!--          <view class="card-list">-->
-<!--            <view class="card-left">-->
-<!--              <text class="class-name">{{item.course_name}}</text>-->
-<!--              <text class="class-info">time: {{item.date}} {{item.time}} site: {{item.site}}</text>-->
-<!--            </view>-->
-<!--            <view class="card-right">-->
-<!--              <text>{{item.building}} {{item.classroom}}</text>-->
-<!--            </view>-->
-<!--          </view>-->
-<!--        </block>-->
-<!--      </exam-card>-->
+      <schedule-card iconBg="#eacdd1" icon="kechengbiao" title="今日课表" bg="card-schedule.png" :isShow.sync="todaySchedules" footText="查看完整课表" url="/pages/schedule" noneText="今日无课">
+        <block slot="content" wx:for="{{todaySchedules}}" wx:if="{{item.course_name}}" wx:key="{{index}}">
+          <view class="card-list">
+            <view class="card-left">
+              <text class="class-name">{{item.course_name}}</text>
+              <text class="class-info">{{item.sessionArr[0]}}~{{item.sessionArr[item.flex-1]}}</text>
+            </view>
+            <view class="card-right">
+              <text>{{item.address}}</text>
+            </view>
+          </view>
+        </block>
+      </schedule-card>
+      <ecard :isShow.sync="ecardBalance" footText="查看交易流水" icon="card" bg="card-ecard.png" title="一卡通余额" url="/pages/ecard" iconBg="#b92c18">
+        <view class="ecard" slot="content">
+          1
+        </view>
+      </ecard>
+      <book-card iconBg="#ab96c5" icon="book" bg="card-library.png" title="我的借阅" :isShow.sync="loanBooks" footText="查看所有借阅" url="/pages/library/loan" noneText="无借阅书籍">
+        <block slot="content" wx:for="{{loanBooks}}" wx:key="{{index}}">
+          <view wx:if="{{item.title && index < 3}}" class="card-list">
+            <view class="card-left">
+              <text class="class-name">{{item.title}}</text>
+            </view>
+            <view class="card-right">
+              <text>{{item.due_date}}</text>
+            </view>
+          </view>
+        </block>
+      </book-card>
 <!--    </view>-->
 <!--    <empty wx:else msg="尚未绑定账号"></empty>-->
 <!--    <view wx:if="{{adShow}}" class="ad">-->
 <!--      <ad unit-id="adunit-35df18bc957ebcd2"></ad>-->
 <!--    </view>-->
-    test
+<!--    test-->
   </view>
 </template>
 
 <script >
 import wepy from 'wepy';
-import MView from 'components/mview';
+// import MView from 'components/mview';
 import Card from 'components/card';
 import Empty from 'components/empty';
 export default class Index extends wepy.page{
   components = {
-    mview: MView,
+    // mview: MView,
     "schedule-card": Card,
     "book-card": Card,
     ecard: Card,
     "exam-card": Card,
-    empty: Empty
   };
 }
 </script>
