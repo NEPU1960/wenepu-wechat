@@ -28,6 +28,7 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      "pages/kb",
       "pages/index",
       'pages/newsLists',
       'pages/my',
