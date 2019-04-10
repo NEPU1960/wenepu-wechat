@@ -31,7 +31,7 @@
 </style>
 
 <template>
-  <form @submit="cache" class="okokok" report-submit>
+  <form @submit="cache" class="okokok" report-submit="True">
     <button formType="submit">
       <slot name="content"></slot>
     </button>
