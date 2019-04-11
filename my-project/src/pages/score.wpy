@@ -32,8 +32,9 @@
     }
   .grade-list {
     display: flex;
+    width: 100%;
     color: #666;
-    font-size: 0.8rem;
+    font-size: 10pt;
     padding: 0.2rem 0.5rem;
   }
   .grade{
@@ -52,6 +53,47 @@
     align-items: stretch;
     padding: 5rpx 30rpx 15rpx;
   }
+  .cj-info-ctn{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    border-radius: 3px;
+    background: #fff;
+    margin-bottom: 50rpx;
+  }
+  .cj-info-box{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    padding: 5rpx 30rpx 15rpx;
+
+  }
+  .cj-info{
+    background: #fff;
+    font-size: 10pt;
+    display: flex;
+    column-width:100px;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding: 25rpx 10rpx 20rpx 5rpx;
+    column-count: 4;
+  }
+  .cj-info-socre{
+    /*right: 100rpx;*/
+    padding-left: 100rpx;
+  }
+  .cj-info-name{
+    display: flex;
+    width: 150rpx;
+  }
+  .guake{
+    color: #f00300;
+  }
+  .normal{
+    color:#3e9ecf;
+  }
 </style>
 <template>
   <view>
@@ -69,21 +111,23 @@
     </view>
   </view>
 <!--    具体成绩-->
-    <view class="grade">
-      <view class="grade-list">
-        <text>课程名</text>
-        <text>分数</text>
-        <text>绩点</text>
-        <text>学分</text>
-        <text>属性</text>
+    <view >
+      <view class="cj-info-box cj-info">
+        <text class="cj-info-name">课程名</text>
+        <text class="cj-info-socre">分数</text>
+        <text class="cj-info-xuefen">学分</text>
+        <text class="cj-info-leibie">属性</text>
       </view>
-      <view wx:for="{{score}}" wx:for-item="items">
-        <view class="grade-xijie">
-          <text>{{items.kecheng}}</text>
-          <text>{{items.fenshu}}</text>
-          <text>{{items.xuefen}}</text>
+      <view class="cj-info-ctn">
+        <view class="cj-info-box" wx:for="{{score}}" wx:for-item="items">
+          <view class="cj-info {{items.fenshu<60||items.fenshu=='不及格'?'guake':'normal'}}">
+            <view class="cj-info-name">{{items.kecheng}}</view>
+            <text class="cj-info-socre">{{items.fenshu}}</text>
+            <text class="cj-info-xuefen">{{items.xuefen}}</text>
+            <text class="cj-info-leibie">{{items.leibie}}</text>
+          </view>
         </view>
-      </view>
+    </view>
     </view>
   </view>
 </template>
@@ -110,7 +154,7 @@
           "biaozhi": " ",
           "buchongxueqi": " ",
           "kecheng": "地球科学概论",
-          "fenshu": "64",
+          "fenshu": 64,
           "leibie": "必修",
           "name": "戚开元",
           "number": " 2",
