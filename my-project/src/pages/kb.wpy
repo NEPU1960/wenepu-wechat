@@ -651,7 +651,7 @@
     </view>
     <view class="kb-cards-ctn blur-area {{blur?'blur':''}}">
       <!-- 每一列为一组 -->
-      <view class="kb-cards-column" wx:for="{{targetLessons}}" wx:key="{{day}}" wx:for-item="day_lesson" wx:for-index="day">
+      <view class="kb-cards-column" wx:for="{{targetLessons}}" wx:key="*this" wx:for-item="day_lesson" wx:for-index="day">
 <!--        <text>{{day_lession.name}}</text>-->
         <!-- today 0周一,1周二 -->
 <!--        <block wx:if="{{(today===day) && (toweek == week)}}">-->
@@ -662,7 +662,7 @@
         <!-- 循环当天的的6节课 -->
 <!--        <view class="kb-card {{wid%2==0?'mg-8':'mg-12'}}" wx:for="{{targetLessons}}" wx:key="{{wid}}" wx:for-index="wid">-->
           <!-- 循环重叠课 -->
-          <block wx:for="{{day_lesson}}" wx:key="{{cid}}" wx:for-item="cards" wx:for-index="cid">
+          <block wx:for="{{day_lesson}}" wx:for-item="cards" wx:for-index="cid">
             <!-- 循环周数，与当前周相同或当前周为*时显示 -->
             <view style="height:{{cards.number==2?cards.number*100:cards.number*100+9}}rpx" data-day="{{day}}" data-wid="{{wid}}" data-cid="{{cid}}" bindtap="showDetail" wx:for="{{cards.weekday}}" wx:key="*this" wx:for-item="iweek" class="mg-8 kb-card-content {{cards.conflictWeeks[iweek] || (week == '*' && cards.klen > 1) ?'k-sec':''}} {{iweek==week || week == '*' ?cards.color:''}}" wx:if="{{iweek==week || week == '*'}}">
               <!-- 判断上课地点是数字还是汉字 -->
@@ -731,33 +731,55 @@
       dates:[12],
       _days: ['一', '二', '三', '四', '五', '六', '日'],
       _weeks: ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '十一周', '十二周', '十三周', '十四周', '十五周', '十六周', '十七周', '十八周', '十九周', '二十周'],
-      targetLessons: [
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 1,
-          "class": "",
-          "jieci": 1,
-          "cos": ""
-        },
+      _time: [ //课程时间与指针位置的映射，{begin:课程开始,end:结束时间,top:指针距开始top格数}
+        { begin: '0:00', end: '7:59', beginTop: -4, endTop: -4 },
+        { begin: '8:00', end: '9:40', beginTop: 0, endTop: 200 },
+        { begin: '9:41', end: '10:04', beginTop: 204, endTop: 204 },
+        { begin: '10:05', end: '11:45', beginTop: 208, endTop: 408 },
+        { begin: '11:46', end: '13:59', beginTop: 414, endTop: 414 },
+        { begin: '14:00', end: '15:40', beginTop: 420, endTop: 620 },
+        { begin: '15:41', end: '16:04', beginTop: 624, endTop: 624 },
+        { begin: '16:05', end: '17:45', beginTop: 628, endTop: 828 },
+        { begin: '17:46', end: '18:59', beginTop: 834, endTop: 834 },
+        { begin: '19:00', end: '20:40', beginTop: 840, endTop: 1040 },
+        { begin: '20:41', end: '20:49', beginTop: 1044, endTop: 1044 },
+        { begin: '20:50', end: '22:30', beginTop: 1048, endTop: 1248 },
+        { begin: '22:31', end: '23:59', beginTop: 1254, endTop: 1254 },
+      ],
+      targetLessons:  [
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 1,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 1
+          }
+        ],
+        [
+          {
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 1,
+            "name": "当代中国政府过程",
+            "teacher": "孙晨光",
+            "week": [
               "13",
               "14",
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "孙晨光",
-            "week": 2,
-            "class": "公管161班,行管161班",
-            "jieci": 1,
-            "cos": "当代中国政府过程"
+            "weekday": 2
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班,行管171班",
+            "classroom": "1H-410",
+            "jieci": 1,
+            "name": "市政学",
+            "teacher": "蒋召宇",
+            "week": [
               "2",
               "3",
               "4",
@@ -766,17 +788,17 @@
               "7",
               "8"
             ],
-            "classroom": "1H-410",
-            "teacher": "蒋召宇",
-            "week": 2,
-            "class": "公管161班,行管161班,行管171班",
-            "jieci": 1,
-            "name": "市政学"
+            "weekday": 2
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班",
+            "classroom": "1F-119",
+            "jieci": 1,
+            "name": "管理信息系统",
+            "teacher": "徐晔",
+            "week": [
               "5",
               "6",
               "7",
@@ -790,17 +812,17 @@
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "徐晔",
-            "week": 3,
-            "class": "公管161班",
-            "jieci": 1,
-            "name": "管理信息系统"
+            "weekday": 3
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,公管171班,行管161班",
+            "classroom": "1H-103",
+            "jieci": 1,
+            "name": "公共部门战略管理",
+            "teacher": "韩磊娟",
+            "week": [
               "1",
               "2",
               "3",
@@ -810,31 +832,31 @@
               "7",
               "8"
             ],
-            "classroom": "1H-103",
-            "teacher": "韩磊娟",
-            "week": 4,
-            "class": "公管161班,公管171班,行管161班",
-            "jieci": 1,
-            "name": "公共部门战略管理"
+            "weekday": 4
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 1,
+            "name": "当代中国政府过程",
+            "teacher": "孙晨光",
+            "week": [
               "13",
               "14",
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "孙晨光",
-            "week": 4,
-            "class": "公管161班,行管161班",
-            "jieci": 1,
-            "name": "当代中国政府过程"
+            "weekday": 4
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,公管171班,行管161班",
+            "classroom": "1H-103",
+            "jieci": 1,
+            "name": "公共部门战略管理",
+            "teacher": "韩磊娟",
+            "week": [
               "1",
               "2",
               "3",
@@ -844,15 +866,15 @@
               "7",
               "8"
             ],
-            "classroom": "1H-103",
-            "teacher": "韩磊娟",
-            "week": 5,
-            "class": "公管161班,公管171班,行管161班",
-            "jieci": 1,
-            "name": "公共部门战略管理"
+            "weekday": 5
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-118",
+            "jieci": 1,
+            "name": "社会调查方法",
+            "teacher": "王宇玲",
+            "week": [
               "9",
               "10",
               "11",
@@ -862,53 +884,55 @@
               "15",
               "16"
             ],
-            "classroom": "1F-118",
-            "teacher": "王宇玲",
-            "week": 5,
-            "class": "公管161班,行管161班",
-            "jieci": 1,
-            "name": "社会调查方法"
+            "weekday": 5
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 6,
-          "class": "",
-          "jieci": 1,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 1,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 6
+          }
+        ],
+        [
+          {
+            "class": "临班412",
+            "classroom": "(暂无教室)",
+            "jieci": 1,
+            "name": "女生穿搭技巧（尔雅网络）",
+            "teacher": "尔雅网络教师",
+            "week": [
               "23"
             ],
-            "classroom": "(暂无classroom)",
-            "teacher": "尔雅网络teacher",
-            "week": 7,
-            "class": "临班412",
-            "jieci": 1,
-            "name": "女生穿搭技巧（尔雅网络）"
+            "weekday": 7
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "主楼A106",
+            "jieci": 2,
+            "name": "大学生就业指导",
+            "teacher": "马苒苒",
+            "week": [
               "1",
               "2",
               "3",
               "4"
             ],
-            "classroom": "主楼A106",
-            "teacher": "马苒苒",
-            "week": 1,
-            "class": "公管161班,行管161班",
-            "jieci": 2,
-            "name": "大学生就业指导"
+            "weekday": 1
           },
           {
-            "weekday": [
+            "class": "公管161班",
+            "classroom": "1F-119",
+            "jieci": 2,
+            "name": "管理信息系统",
+            "teacher": "徐晔",
+            "week": [
               "5",
               "6",
               "7",
@@ -922,17 +946,17 @@
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "徐晔",
-            "week": 1,
-            "class": "公管161班",
-            "jieci": 2,
-            "name": "管理信息系统"
+            "weekday": 1
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-118",
+            "jieci": 2,
+            "name": "行政法与行政诉讼法",
+            "teacher": "匡瑾璘",
+            "week": [
               "1",
               "2",
               "3",
@@ -946,31 +970,31 @@
               "11",
               "12"
             ],
-            "classroom": "1F-118",
-            "teacher": "匡瑾璘",
-            "week": 2,
-            "class": "公管161班,行管161班",
-            "jieci": 2,
-            "name": "行政法与行政诉讼法"
+            "weekday": 2
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 2,
+            "name": "当代中国政府过程",
+            "teacher": "孙晨光",
+            "week": [
               "13",
               "14",
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "孙晨光",
-            "week": 2,
-            "class": "公管161班,行管161班",
-            "jieci": 2,
-            "name": "当代中国政府过程"
+            "weekday": 2
           }
         ],
         [
           {
-            "weekday": [
+            "class": "中文[161-2]班,公管161班,行管161班",
+            "classroom": "1F-510",
+            "jieci": 2,
+            "name": "创业基础",
+            "teacher": "周晓焱",
+            "week": [
               "9",
               "10",
               "11",
@@ -980,31 +1004,31 @@
               "15",
               "16"
             ],
-            "classroom": "1F-510",
-            "teacher": "周晓焱",
-            "week": 3,
-            "class": "中文[161-2]班,公管161班,行管161班",
-            "jieci": 2,
-            "name": "创业基础"
+            "weekday": 3
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 2,
+            "name": "当代中国政府过程",
+            "teacher": "孙晨光",
+            "week": [
               "13",
               "14",
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "孙晨光",
-            "week": 4,
-            "class": "公管161班,行管161班",
-            "jieci": 2,
-            "name": "当代中国政府过程"
+            "weekday": 4
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班,行管171班",
+            "classroom": "1F-118",
+            "jieci": 2,
+            "name": "市政学",
+            "teacher": "蒋召宇",
+            "week": [
               "2",
               "3",
               "4",
@@ -1013,17 +1037,17 @@
               "7",
               "8"
             ],
-            "classroom": "1F-118",
-            "teacher": "蒋召宇",
-            "week": 4,
-            "class": "公管161班,行管161班,行管171班",
-            "jieci": 2,
-            "name": "市政学"
+            "weekday": 4
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-118",
+            "jieci": 2,
+            "name": "管理文秘与电子政务",
+            "teacher": "于群（外聘）",
+            "week": [
               "9",
               "10",
               "11",
@@ -1033,15 +1057,15 @@
               "15",
               "16"
             ],
-            "classroom": "1F-118",
-            "teacher": "于群（外聘）",
-            "week": 5,
-            "class": "公管161班,行管161班",
-            "jieci": 2,
-            "name": "管理文秘与电子政务"
+            "weekday": 5
           },
           {
-            "weekday": [
+            "class": "公管161班,表演[161-3]班",
+            "classroom": "1F-315",
+            "jieci": 2,
+            "name": "当代世界经济与政治",
+            "teacher": "白海艳",
+            "week": [
               "1",
               "2",
               "3",
@@ -1051,39 +1075,41 @@
               "7",
               "8"
             ],
-            "classroom": "1F-315",
-            "teacher": "白海艳",
-            "week": 5,
-            "class": "公管161班,表演[161-3]班",
-            "jieci": 2,
-            "name": "当代世界经济与政治"
+            "weekday": 5
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 6,
-          "class": "",
-          "jieci": 2,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 2,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 6
+          }
+        ],
+        [
+          {
+            "class": "临班347",
+            "classroom": "(暂无教室)",
+            "jieci": 2,
+            "name": "女子礼仪（尔雅网络）",
+            "teacher": "尔雅网络教师",
+            "week": [
               "23"
             ],
-            "classroom": "(暂无classroom)",
-            "teacher": "尔雅网络teacher",
-            "week": 7,
-            "class": "临班347",
-            "jieci": 2,
-            "name": "女子礼仪（尔雅网络）"
+            "weekday": 7
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 3,
+            "name": "危机管理",
+            "teacher": "史春媛",
+            "week": [
               "9",
               "10",
               "11",
@@ -1093,15 +1119,15 @@
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "史春媛",
-            "week": 1,
-            "class": "公管161班,行管161班",
-            "jieci": 3,
-            "name": "危机管理"
+            "weekday": 1
           },
           {
-            "weekday": [
+            "class": "公管161班,表演[161-3]班",
+            "classroom": "1H-302",
+            "jieci": 3,
+            "name": "当代世界经济与政治",
+            "teacher": "白海艳",
+            "week": [
               "1",
               "2",
               "3",
@@ -1110,26 +1136,28 @@
               "7",
               "8"
             ],
-            "classroom": "1H-302",
-            "teacher": "白海艳",
-            "week": 1,
-            "class": "公管161班,表演[161-3]班",
-            "jieci": 3,
-            "name": "当代世界经济与政治"
+            "weekday": 1
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 2,
-          "class": "",
-          "jieci": 3,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 3,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 2
+          }
+        ],
+        [
+          {
+            "class": "公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 3,
+            "name": "危机管理",
+            "teacher": "史春媛",
+            "week": [
               "9",
               "10",
               "11",
@@ -1139,17 +1167,17 @@
               "15",
               "16"
             ],
-            "classroom": "1F-119",
-            "teacher": "史春媛",
-            "week": 3,
-            "class": "公管161班,行管161班",
-            "jieci": 3,
-            "name": "危机管理"
+            "weekday": 3
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1H-102",
+            "jieci": 3,
+            "name": "行政法与行政诉讼法",
+            "teacher": "匡瑾璘",
+            "week": [
               "1",
               "2",
               "3",
@@ -1162,17 +1190,17 @@
               "11",
               "12"
             ],
-            "classroom": "1H-102",
-            "teacher": "匡瑾璘",
-            "week": 4,
-            "class": "公管161班,行管161班",
-            "jieci": 3,
-            "name": "行政法与行政诉讼法"
+            "weekday": 4
           }
         ],
         [
           {
-            "weekday": [
+            "class": "社工161班,公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 3,
+            "name": "公共关系心理学",
+            "teacher": "史春媛",
+            "week": [
               "1",
               "2",
               "3",
@@ -1182,15 +1210,15 @@
               "7",
               "8"
             ],
-            "classroom": "1F-119",
-            "teacher": "史春媛",
-            "week": 5,
-            "class": "社工161班,公管161班,行管161班",
-            "jieci": 3,
-            "name": "公共关系心理学"
+            "weekday": 5
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "1F-118",
+            "jieci": 3,
+            "name": "管理文秘与电子政务",
+            "teacher": "于群（外聘）",
+            "week": [
               "9",
               "10",
               "11",
@@ -1199,39 +1227,41 @@
               "14",
               "15"
             ],
-            "classroom": "1F-118",
-            "teacher": "于群（外聘）",
-            "week": 5,
-            "class": "公管161班,行管161班",
-            "jieci": 3,
-            "name": "管理文秘与电子政务"
+            "weekday": 5
           }
         ],
         [
           {
-            "weekday": [
+            "class": "公管161班,行管161班",
+            "classroom": "主楼C303",
+            "jieci": 3,
+            "name": "行政法与行政诉讼法",
+            "teacher": "匡瑾璘",
+            "week": [
               "8"
             ],
-            "classroom": "主楼C303",
-            "teacher": "匡瑾璘",
-            "week": 6,
-            "class": "公管161班,行管161班",
-            "jieci": 3,
-            "name": "行政法与行政诉讼法"
+            "weekday": 6
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 7,
-          "class": "",
-          "jieci": 3,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 3,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 7
+          }
+        ],
+        [
+          {
+            "class": "社工161班,公管161班,行管161班",
+            "classroom": "1F-119",
+            "jieci": 4,
+            "name": "公共关系心理学",
+            "teacher": "史春媛",
+            "week": [
               "1",
               "2",
               "3",
@@ -1241,35 +1271,15 @@
               "7",
               "8"
             ],
-            "classroom": "1F-119",
-            "teacher": "史春媛",
-            "week": 1,
-            "class": "社工161班,公管161班,行管161班",
-            "jieci": 4,
-            "name": "公共关系心理学"
+            "weekday": 1
           },
           {
-            "weekday": [
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16"
-            ],
-            "classroom": "1F-510",
-            "teacher": "周晓焱",
-            "week": 1,
             "class": "中文[161-2]班,公管161班,行管161班",
+            "classroom": "1F-510",
             "jieci": 4,
-            "name": "创业基础"
-          }
-        ],
-        [
-          {
-            "weekday": [
+            "name": "创业基础",
+            "teacher": "周晓焱",
+            "week": [
               "9",
               "10",
               "11",
@@ -1279,17 +1289,37 @@
               "15",
               "16"
             ],
-            "classroom": "1F-118",
-            "teacher": "王宇玲",
-            "week": 2,
+            "weekday": 1
+          }
+        ],
+        [
+          {
             "class": "公管161班,行管161班",
+            "classroom": "1F-118",
             "jieci": 4,
-            "name": "社会调查方法"
+            "name": "社会调查方法",
+            "teacher": "王宇玲",
+            "week": [
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15",
+              "16"
+            ],
+            "weekday": 2
           }
         ],
         [
           {
-            "weekday": [
+            "class": "俄语161班,社工161班,统计161班,计[161-4]班,信计[161-2]班,英语[161-4]班,物工[161-2]班,应数161班,中文[161-2]班,公管161班,信管161班,行管161班,信息[161-2]班,教161班",
+            "classroom": "(暂无教室)",
+            "jieci": 4,
+            "name": "排课占位",
+            "teacher": "(暂无教师)",
+            "week": [
               "1",
               "2",
               "3",
@@ -1307,37 +1337,37 @@
               "15",
               "16"
             ],
-            "classroom": "(暂无classroom)",
-            "teacher": "(暂无teacher)",
-            "week": 3,
-            "class": "俄语161班,社工161班,统计161班,计[161-4]班,信计[161-2]班,英语[161-4]班,物工[161-2]班,应数161班,中文[161-2]班,公管161班,信管161班,行管161班,信息[161-2]班,教161班",
-            "jieci": 4,
-            "name": "排课占位"
+            "weekday": 3
           }
         ],
         [
           {
-            "weekday": [
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16"
-            ],
-            "classroom": "1H-210",
-            "teacher": "房廷宏",
-            "week": 4,
             "class": "社工161班,中文[161-2]班,公管161班,行管161班",
+            "classroom": "1H-210",
             "jieci": 4,
-            "name": "习近平总书记系列重要讲话专题辅导"
+            "name": "习近平总书记系列重要讲话专题辅导",
+            "teacher": "房廷宏",
+            "week": [
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15",
+              "16"
+            ],
+            "weekday": 4
           }
         ],
         [
           {
-            "weekday": [
+            "class": "俄语161班,社工161班,统计161班,计[161-4]班,信计[161-2]班,英语[161-4]班,物工[161-2]班,应数161班,中文[161-2]班,公管161班,信管161班,行管161班,信息[161-2]班,教161班",
+            "classroom": "(暂无教室)",
+            "jieci": 4,
+            "name": "排课占位",
+            "teacher": "(暂无教师)",
+            "week": [
               "1",
               "2",
               "3",
@@ -1355,185 +1385,204 @@
               "15",
               "16"
             ],
-            "classroom": "(暂无classroom)",
-            "teacher": "(暂无teacher)",
-            "week": 5,
-            "class": "俄语161班,社工161班,统计161班,计[161-4]班,信计[161-2]班,英语[161-4]班,物工[161-2]班,应数161班,中文[161-2]班,公管161班,信管161班,行管161班,信息[161-2]班,教161班",
-            "jieci": 4,
-            "name": "排课占位"
+            "weekday": 5
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 6,
-          "class": "",
-          "jieci": 4,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 7,
-          "class": "",
-          "jieci": 4,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 4,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 6
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 4,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 7
+          }
+        ],
+        [
+          {
+            "class": "公管161班,行管161班,行管171班",
+            "classroom": "1H-402",
+            "jieci": 5,
+            "name": "市政学",
+            "teacher": "蒋召宇",
+            "week": [
               "4"
             ],
-            "classroom": "1H-402",
-            "teacher": "蒋召宇",
-            "week": 1,
-            "class": "公管161班,行管161班,行管171班",
-            "jieci": 5,
-            "name": "市政学"
+            "weekday": 1
           },
           {
-            "weekday": [
+            "class": "公管161班,行管161班,行管171班",
+            "classroom": "1H-402",
+            "jieci": 5,
+            "name": "市政学",
+            "teacher": "蒋召宇",
+            "week": [
               "3"
             ],
-            "classroom": "1H-402",
-            "teacher": "蒋召宇",
-            "week": 1,
-            "class": "公管161班,行管161班,行管171班",
-            "jieci": 5,
-            "name": "市政学"
+            "weekday": 1
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 2,
-          "class": "",
-          "jieci": 5,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 3,
-          "class": "",
-          "jieci": 5,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 4,
-          "class": "",
-          "jieci": 5,
-          "name": ""
-        },
         [
           {
-            "weekday": [
-              "2"
-            ],
-            "classroom": "1F-311",
-            "teacher": "李明",
-            "week": 5,
-            "class": "社工161班,中文[161-2]班,公管161班,行管161班",
+            "class": "",
+            "classroom": "",
             "jieci": 5,
-            "name": "形势与政策6"
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 2
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 6,
-          "class": "",
-          "jieci": 5,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 7,
-          "class": "",
-          "jieci": 5,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 5,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 3
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 5,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 4
+          }
+        ],
+        [
+          {
+            "class": "社工161班,中文[161-2]班,公管161班,行管161班",
+            "classroom": "1F-311",
+            "jieci": 5,
+            "name": "形势与政策6",
+            "teacher": "李明",
+            "week": [
               "2"
             ],
-            "classroom": "1F-311",
-            "teacher": "李明",
-            "week": 1,
+            "weekday": 5
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 5,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 6
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 5,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 7
+          }
+        ],
+        [
+          {
             "class": "社工161班,中文[161-2]班,公管161班,行管161班",
+            "classroom": "1F-311",
             "jieci": 6,
-            "name": "形势与政策6"
+            "name": "形势与政策6",
+            "teacher": "李明",
+            "week": [
+              "2"
+            ],
+            "weekday": 1
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 2,
-          "class": "",
-          "jieci": 6,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 3,
-          "class": "",
-          "jieci": 6,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 4,
-          "class": "",
-          "jieci": 6,
-          "name": ""
-        },
         [
           {
-            "weekday": [
+            "class": "",
+            "classroom": "",
+            "jieci": 6,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 2
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 6,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 3
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 6,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 4
+          }
+        ],
+        [
+          {
+            "class": "公管161班,表演[161-3]班",
+            "classroom": "1H-102",
+            "jieci": 6,
+            "name": "当代世界经济与政治",
+            "teacher": "白海艳",
+            "week": [
               "5"
             ],
-            "classroom": "1H-102",
-            "teacher": "白海艳",
-            "week": 5,
-            "class": "公管161班,表演[161-3]班",
-            "jieci": 6,
-            "name": "当代世界经济与政治"
+            "weekday": 5
           }
         ],
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 6,
-          "class": "",
-          "jieci": 6,
-          "name": ""
-        },
-        {
-          "weekday": "",
-          "classroom": "",
-          "teacher": "",
-          "week": 7,
-          "class": "",
-          "jieci": 6,
-          "name": ""
-        }
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 6,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 6
+          }
+        ],
+        [
+          {
+            "class": "",
+            "classroom": "",
+            "jieci": 6,
+            "name": "",
+            "teacher": "",
+            "week": "",
+            "weekday": 7
+          }
+        ]
       ]
     }
   }
