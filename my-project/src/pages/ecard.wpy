@@ -1,7 +1,134 @@
+<style lang="less">
+  .ecard{
+    margin: 0 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 4rpx 4rpx 20rpx #a82413;
+    background-image: url("https://scuplus.oss-cn-shenzhen.aliyuncs.com/ecard/1.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    /*align-items: center;*/
+    height: 200px;
+  }
+  .money {
+    margin-top: 3.5rem;
+    color: #fff;
+    font-size: 2.3rem;
+    text-align: center;
+  }
+  .guodu{
+    flex-flow: row nowrap;
+    align-items:end;
+    display: flex;
+    font-size: 12px;
+    margin-top: 90rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    justify-content: space-between;
+  }
+  /*.left-money{*/
+  /*  text-align: left;*/
+  /*}*/
+  /*.right-money{*/
+  /*  text-align: right;*/
+  /*}*/
+  .thead.tr {
+    background: #b92c18;
+    color: #fff;
+    border-bottom: none;
+  }
+  .tr {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 3rem;
+    align-items: center;
+
+    background: #fff;
+    border-bottom: 1px dashed #ddd;
+    color: #666;
+    padding: 0.3rem;
+    margin: auto;
+  }
+  .trans {
+    border-radius: 0.5rem;
+    box-shadow: 2rpx 2rpx 20rpx #ccc;
+    margin: 0 1.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .td {
+    width:40%;
+    justify-content: center;
+    text-align: center;
+    line-height: 56rpx;
+  }
+  .th {
+    width: 40%;
+    justify-content: center;
+    background: #3366FF;
+    color: #fff;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+  }
+  .line{
+    display: flex;
+    height: 56rpx;
+    background: rgba(0, 0, 0, 0.6);
+    line-height: 56rpx;
+    color: #fff;
+  }
+  .line view{
+    padding:0 16rpx
+  }
+
+  .down{
+    color: #bab6bd;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 20px;
+  }
+</style>
+<template>
+  <view>
+    <view wx:for="{{ecard}}" wx:for-item="items">
+      <view  class="ecard">
+        <view class="money">￥{{items.yue.yu}}</view>
+        <view class="guodu">
+          <view class="left-money">当前过渡余额：{{items.yue.dangqianguoduyue}}</view>
+          <view class="right-money">上次过渡余额：{{items.yue.shangciguoduyue}}</view>
+        </view>
+      </view>
+      <view class="trans">
+        <view class="tr">
+          <view class="th">消费</view>
+          <view class="th">地点</view>
+          <view class="th">时间</view>
+          <view class="th">余额</view>
+        </view>
+        <view wx:for="{{items.month_bill}}" wx:for-item="bill">
+          <view class="tr">
+            <text class="td line-left">{{bill.jiaoyie}}</text>
+            <text class="td line-left">{{bill.zixitong}}</text>
+            <text class="td line-left">{{bill.time}}</text>
+            <text class="td">{{bill.yue}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="down">到底了，没有数据啦</view>
+  </view>
+</template>
 <script>
   import wepy from 'wepy';
   export default class Library extends wepy.page{
-    data={"ecard": [
+    data={
+      height:20,
+      "ecard": [
         {
           "day_bill": [],
           "month_bill": [
@@ -134,522 +261,12 @@
               "yue": "29.71",
               "zhuangtai": "正常",
               "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1733",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-6.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/24 10:20:38",
-              "yue": "34.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1732",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-6.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/23 11:41:08",
-              "yue": "40.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1731",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-1.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/23 08:59:49",
-              "yue": "46.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1730",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-4.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/22 11:42:47",
-              "yue": "47.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1729",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/21 11:36:11",
-              "yue": "51.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1728",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/20 11:30:05",
-              "yue": "61.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1727",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-2.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/20 09:04:39",
-              "yue": "71.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1726",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-18.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/19 11:42:02",
-              "yue": "74.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1725",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-7.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/18 17:06:36",
-              "yue": "92.31",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1724",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/18 11:33:21",
-              "yue": "99.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1723",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-3.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/18 08:28:48",
-              "yue": "109.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1722",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/17 11:24:25",
-              "yue": "112.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1720",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-1.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/17 08:51:51",
-              "yue": "21.81",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1719",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/16 20:27:20",
-              "yue": "23.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1718",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-6.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/16 11:41:44",
-              "yue": "33.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1717",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-4.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/16 08:21:45",
-              "yue": "39.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1716",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-8.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/15 17:01:59",
-              "yue": "43.31",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1715",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-11.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/15 11:48:33",
-              "yue": "51.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1714",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-2.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/14 17:06:53",
-              "yue": "62.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1713",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-12.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/14 17:04:09",
-              "yue": "64.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1712",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/14 11:44:21",
-              "yue": "76.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1711",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/13 17:34:38",
-              "yue": "85.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1710",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.30",
-              "leixing": "持卡人消费",
-              "time": "2019/03/13 11:23:39",
-              "yue": "95.31",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1709",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-4.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/13 08:15:38",
-              "yue": "104.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1708",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-11.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/12 17:02:39",
-              "yue": "108.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1707",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-3.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/12 17:00:47",
-              "yue": "119.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1706",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/12 11:45:04",
-              "yue": "122.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1705",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-1.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/12 11:43:19",
-              "yue": "131.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1703",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-3.10",
-              "leixing": "持卡人消费",
-              "time": "2019/03/12 07:38:00",
-              "yue": "32.61",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1702",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-4.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/11 17:13:11",
-              "yue": "35.71",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1701",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-7.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/11 17:10:23",
-              "yue": "39.71",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1700",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-6.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/11 17:10:11",
-              "yue": "46.71",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1699",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/11 11:37:51",
-              "yue": "52.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1698",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-2.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/11 09:26:17",
-              "yue": "62.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1697",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/10 20:42:33",
-              "yue": "65.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1696",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/10 19:30:40",
-              "yue": "75.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1695",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-11.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/09 11:55:00",
-              "yue": "85.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1694",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-13.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/09 11:54:36",
-              "yue": "96.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1693",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/08 11:44:14",
-              "yue": "109.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1692",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-7.50",
-              "leixing": "持卡人消费",
-              "time": "2019/03/07 09:44:17",
-              "yue": "119.21",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1690",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-8.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/06 18:37:13",
-              "yue": "26.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1689",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/06 18:36:41",
-              "yue": "34.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1688",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-3.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/06 18:34:59",
-              "yue": "43.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1687",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/06 11:26:16",
-              "yue": "46.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1686",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-7.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/05 16:53:18",
-              "yue": "56.71",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1685",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/05 11:42:34",
-              "yue": "63.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1684",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-9.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/05 11:42:31",
-              "yue": "72.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1683",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-5.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/04 17:41:43",
-              "yue": "81.71",
-              "zhuangtai": "正常",
-              "zixitong": "新硬网关系统"
-            },
-            {
-              "cishu": "1682",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-10.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/04 11:36:23",
-              "yue": "86.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1681",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-6.80",
-              "leixing": "持卡人消费",
-              "time": "2019/03/03 17:58:06",
-              "yue": "96.71",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
-            },
-            {
-              "cishu": "1680",
-              "dianzizhanghu": "非电子交易",
-              "jiaoyie": "-8.00",
-              "leixing": "持卡人消费",
-              "time": "2019/03/03 17:36:45",
-              "yue": "103.51",
-              "zhuangtai": "正常",
-              "zixitong": "315网关（三食.."
             }
           ],
           "yue": {
             "dangqianguoduyue": "0.00元",
             "shangciguoduyue": "0.00元",
-            "yue": "63.31元"
+            "yu": "63.31元"
           }
         }
       ]

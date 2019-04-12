@@ -1,24 +1,173 @@
+<style lang="less">
+  .container {
+    background-color: #f7f7f7;
+  }
+  .user-jy {
+    display: flex;
+    background: #fefefe;
+    border-bottom: 1rpx solid #eee;
+  }
+  .user-jy-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 11pt;
+    line-height: 150%;
+    height: 150rpx;
+    padding: 20rpx;
+    border-right: 1rpx solid #eee;
+  }
+  .user-jy-dbet {
+    border: none;
+  }
+  .user-jy-hd {
+    color: #777;
+  }
+  .user-jy-bd {
+    display: flex;
+    justify-content: center;
+  }
+  .user-jy-value {
+    font-size: 28pt;
+    color: #73b4ef;
+    font-weight: bold;
+    line-height: 150%;
+    padding: 0 20rpx 0 30rpx;
+  }
+  .user-jy-text {
+    color: #999;
+    font-size: 10pt;
+    line-height: 200%;
+    align-self: flex-end;
+  }
+  .current-type {
+    color: #777;
+    font-size: 10pt;
+    line-height: 200%;
+    margin-bottom: 15rpx;
+  }
+  .blud{
+    color: blue;
+  }
+  .book-card{
+    background-image: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/library.png");
+    background-size:100%;
+    background-repeat:no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 35rpx 30rpx 10rpx;
+    margin-bottom: 20rpx;
+    /*background: #fff;*/
+    border-radius: 3px;
+    margin-top: 5rpx;
+  }
+  .book-list{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 25rpx 30rpx;
+  }
+  .book-name {
+    font-size: 15pt;
+    line-height: 100%;
+    word-break: break-all;
+  }
+  .book-img {
+    height: 13pt;
+    width: 13pt;
+    margin-top: 2pt;
+    margin-right: 10rpx;
+  }
+  .book-date {
+    /*display: flex;*/
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 25rpx;
+    font-size: 9pt;
+    color: #888;
+  }
+  .yhrq-value{
+    font-size: 13pt;
+  }
+  .red{
+    color: red;
+  }
+</style>
+<template>
+  <view>
+    <view class="user-jy">
+      <view class="user-jy-item user-jy-num">
+        <text class="user-jy-hd">当前借阅</text>
+        <view class="user-jy-bd">
+          <text class="user-jy-value">{{library.total}}</text>
+          <text class="user-jy-text">本</text>
+        </view>
+      </view>
+      <view class="user-jy-item user-jy-num" bindtap="jyHistory">
+        <text class="user-jy-hd">即将过期</text>
+        <view class="user-jy-bd">
+          <text class="user-jy-value {{library.guoqi>0?'red':''}}">{{library.guoqi}}</text>
+          <text class="user-jy-text">本</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="current-type">当前借阅记录</view>
+
+      <view class="book-list" wx:for="{{library.booklist}}" wx:for-item="items">
+<!--        <view wx:for="{{booklist.booklist}}" wx:for-item="items">-->
+        <view class="book-card">
+        <view class="book-name">
+          <image class="book-img" src="/images/core/jy/green.png"></image>{{items.bookname}}
+        </view>
+        <view class="book-date">
+          <view>
+            <text>借阅日期：</text>
+            <text>{{items.jitime}}</text>
+          </view>
+          <view>
+            <text>应还日期：</text>
+            <text class="yhrq-value">{{items.huantime}}</text>
+          </view>
+          <view>
+            <text>剩余时间：</text>
+            <text class="yhrq-value {{items.lastday<8?'red':''}}" >{{items.lastday}}天</text>
+          </view>
+        </view>
+<!--    </view>-->
+  </view>
+    </view>
+  </view>
+</template>
 <script>
   import wepy from 'wepy';
   export default class Library extends wepy.page{
-    data={ "library": [
-        {
-          "0": "",
-          "1": "01362903",
-          "2": "行政法案例教程",
-          "3": "关保英著",
-          "4": "",
-          "5": "东北石油大学图书馆",
-          "6": "社科书库(217室)",
-          "7": "普通图书",
-          "8": "2019-04-01 20:54:38",
-          "9": "2019-05-31 20:54:38",
-          "10": "",
-          "11": "0",
-          "12": "正常",
-          "13": 50
-        }
-      ]
+    data={"library": {
+        "booklist": [
+          {
+            "author": "关保英著",
+            "bookid": "01362903",
+            "bookname": "行政法案例教程",
+            "canceleixing": "普通图书",
+            "diancangdi": "社科书库(217室)",
+            "guancangdanwei": "东北石油大学图书馆",
+            "huantime": "2019-05-31 20:54:38",
+            "id": "",
+            "jitime": "2019-04-01 20:54:38",
+            "juanqi": "",
+            "lastday": 49,
+            "status": "正常",
+            "xujiecishu": "0",
+            "xujietime": ""
+          }
+        ],
+        "guoqi": 1,
+        "total": 1
+      }
     }
 
   }
