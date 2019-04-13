@@ -15,6 +15,7 @@ module.exports = {
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src'),
+      'colorui': path.join(__dirname, 'src/colorui'),
       'components': path.join(__dirname, 'src/components'),
       'mixins': path.join(__dirname, 'src/mixins'),
       'util': path.join(__dirname, 'src/util'),

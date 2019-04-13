@@ -1,11 +1,9 @@
 <style lang="less">
-  .container {
-    background-color: #f7f7f7;
-  }
+  /*@import "../less/main.wxss";*/
   .user-jy {
     display: flex;
     background: #fefefe;
-    border-bottom: 1rpx solid #eee;
+    border-bottom: 10rpx solid #eee;
   }
   .user-jy-item {
     flex: 1;
@@ -42,16 +40,21 @@
     align-self: flex-end;
   }
   .current-type {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
     color: #777;
     font-size: 10pt;
     line-height: 200%;
-    margin-bottom: 15rpx;
+    /*margin-bottom: 15rpx;*/
+    /*margin-top: 15rpx;*/
+    margin: 15rpx 5rpx 25rpx 25rpx;
   }
   .blud{
     color: blue;
   }
   .book-card{
-    background-image: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/library.png");
+    /*background-image: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/library.png");*/
     background-size:100%;
     background-repeat:no-repeat;
     display: flex;
@@ -60,10 +63,9 @@
     justify-content: space-between;
     overflow: hidden;
     padding: 35rpx 30rpx 10rpx;
-    margin-bottom: 20rpx;
-    /*background: #fff;*/
+    /*margin-bottom: 10rpx;*/
+    background: #fff;
     border-radius: 3px;
-    margin-top: 5rpx;
   }
   .book-list{
     display: flex;
@@ -96,48 +98,187 @@
   .red{
     color: red;
   }
+  .cu-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 30rpx;
+    font-size: 28rpx;
+    height: 64rpx;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    overflow: visible;
+    margin-left: initial;
+    transform: translate(0rpx, 0rpx);
+    margin-right: initial;
+  }
+
+  .cu-btn::after {
+    display: none;
+  }
+
+  .cu-btn:not([class*="bg-"]) {
+    background-color: #f0f0f0;
+  }
+
+  .cu-btn[class*="line"] {
+    background-color: transparent;
+  }
+
+  .cu-btn[class*="line"]::after {
+    content: " ";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1rpx solid currentColor;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    box-sizing: border-box;
+    border-radius: 12rpx;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .cu-btn.round[class*="line"]::after {
+    border-radius: 1000rpx;
+  }
+
+  .cu-btn[class*="lines"]::after {
+    border: 6rpx solid currentColor;
+  }
+
+  .cu-btn[class*="bg-"]::after {
+    display: none;
+  }
+
+  .cu-btn.sm {
+    padding: 0 20rpx;
+    font-size: 20rpx;
+    height: 48rpx;
+  }
+
+  .cu-btn.lg {
+    padding: 0 40rpx;
+    font-size: 32rpx;
+    height: 80rpx;
+  }
+
+  .cu-btn.icon.sm {
+    width: 48rpx;
+    height: 48rpx;
+  }
+
+  .cu-btn.icon {
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 500rpx;
+    padding: 0;
+  }
+
+  button.icon.lg {
+    width: 80rpx;
+    height: 80rpx;
+  }
+
+  .cu-btn.shadow-blur::before {
+    top: 4rpx;
+    left: 4rpx;
+    filter: blur(6rpx);
+    opacity: 0.6;
+  }
+
+  .cu-btn.button-hover {
+    transform: translate(1rpx, 1rpx);
+  }
+
+  .block {
+    display: block;
+  }
+
+  .cu-btn.block {
+    display: flex;
+  }
+
+  .cu-btn[disabled] {
+    opacity: 0.6;
+    color: #fff;
+  }
+
+  .text-green, .line-green, .lines-green {
+    color: #39b54a;
+  }
+  .text-cyan, .line-cyan, .lines-cyan{
+    color: #3e9ecf;
+  }
+  .duiqi{
+    display: flex;
+    justify-content: center;
+    margin-left: 50rpx;
+
+  }
+  .info{
+    display: flex;
+    flex-direction: row;
+  }
+  .hidden{
+    display: none;
+  }
+
 </style>
 <template>
   <view>
     <view class="user-jy">
       <view class="user-jy-item user-jy-num">
-        <text class="user-jy-hd">当前借阅</text>
+        <view class="user-jy-hd">当前借阅</view>
         <view class="user-jy-bd">
-          <text class="user-jy-value">{{library.total}}</text>
-          <text class="user-jy-text">本</text>
+          <view class="user-jy-value">{{library.total}}</view>
+          <view class="user-jy-text">本</view>
         </view>
       </view>
       <view class="user-jy-item user-jy-num" bindtap="jyHistory">
-        <text class="user-jy-hd">即将过期</text>
+        <view class="user-jy-hd">即将过期</view>
         <view class="user-jy-bd">
-          <text class="user-jy-value {{library.guoqi>0?'red':''}}">{{library.guoqi}}</text>
-          <text class="user-jy-text">本</text>
+          <view class="user-jy-value {{library.guoqi>0?'red':''}}">{{library.guoqi}}</view>
+          <view class="user-jy-text">本</view>
         </view>
       </view>
     </view>
 
-    <view class="current-type">当前借阅记录</view>
+    <view class="current-type">
+      <view>当前借阅记录</view>
+      <button class="cu-btn line-green round lg shadow">一键续借</button>
+    </view>
 
       <view class="book-list" wx:for="{{library.booklist}}" wx:for-item="items">
 <!--        <view wx:for="{{booklist.booklist}}" wx:for-item="items">-->
         <view class="book-card">
-        <view class="book-name">
-          <image class="book-img" src="/images/core/jy/green.png"></image>{{items.bookname}}
-        </view>
-        <view class="book-date">
-          <view>
-            <text>借阅日期：</text>
-            <text>{{items.jitime}}</text>
+          <view class="book-name">
+            <image class="book-img" src="/images/core/jy/green.png"></image>{{items.bookname}}
           </view>
-          <view>
-            <text>应还日期：</text>
-            <text class="yhrq-value">{{items.huantime}}</text>
+          <view class="info">
+            <view class="book-date">
+              <view>
+                <text>借阅日期：</text>
+                <text>{{items.jitime}}</text>
+              </view>
+              <view>
+                <text>应还日期：</text>
+                <text class="yhrq-value">{{items.huantime}}</text>
+              </view>
+              <view>
+                <text>剩余时间：</text>
+                <text class="yhrq-value {{items.lastday<8?'red':''}}" >{{items.lastday}}天</text>
+
+              </view>
+             </view>
+            <button class="{{items.lastday<0||items.xujiecishu==1?'hidden':'cu-btn line-cyan round shadown duiqi'}}">续借</button>
           </view>
-          <view>
-            <text>剩余时间：</text>
-            <text class="yhrq-value {{items.lastday<8?'red':''}}" >{{items.lastday}}天</text>
-          </view>
-        </view>
 <!--    </view>-->
   </view>
     </view>
@@ -162,6 +303,22 @@
             "lastday": 49,
             "status": "正常",
             "xujiecishu": "0",
+            "xujietime": ""
+          },
+          {
+            "author": "关保英著",
+            "bookid": "01362903",
+            "bookname": "行政法案例教程",
+            "canceleixing": "普通图书",
+            "diancangdi": "社科书库(217室)",
+            "guancangdanwei": "东北石油大学图书馆",
+            "huantime": "2019-05-31 20:54:38",
+            "id": "",
+            "jitime": "2019-04-01 20:54:38",
+            "juanqi": "",
+            "lastday": 15,
+            "status": "正常",
+            "xujiecishu": "1",
             "xujietime": ""
           }
         ],

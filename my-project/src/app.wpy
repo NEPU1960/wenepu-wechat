@@ -1,5 +1,4 @@
 <style lang="less">
-
 @import "./icon/iconfont";
 @import "./less/config";
 @import "./less/app";
@@ -16,14 +15,8 @@
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
-// import Http from "./util/http";
-// import db from "./util/db";
-// import Login from "./util/login";
 import { setStore } from 'wepy-redux'
 import configStore from './store'
-
-const store = configStore()
-setStore(store)
 
 export default class extends wepy.app {
   config = {
