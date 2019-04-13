@@ -1,0 +1,127 @@
+<style lang="less">
+.title{
+  text-align: center;
+  margin-top: 100rpx;
+}
+  .book-info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 80rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    /*display: block;*/
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    float: none;
+    z-index: auto;
+    /*width: 150px;*/
+    /*height: 100px;*/
+    position: static;
+    cursor: default;
+    opacity: 1;
+    /*margin: 0;*/
+    padding: 23px;
+    overflow: visible;
+    border: none;
+    -webkit-border-radius: 21px;
+    border-radius: 21px;
+    font: normal 16px/1 "Times New Roman", Times, serif;
+    /*color: rgba(255,255,255,1);*/
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    background: none;
+    -webkit-box-shadow: 8px 6px 24px -5px rgba(35,109,188,0.91) ;
+    box-shadow: 8px 6px 24px -5px rgba(35,109,188,0.91) ;
+    /*box-shadow: 3px 3px 18px 3px rgba(28,164,255,0.91) ;*/
+    background: -webkit-linear-gradient(-90deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
+    background: -moz-linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
+    text-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: 50% 50% 0;
+    transform-origin: 50% 50% 0;
+  }
+  .book-author{
+    display: flex;
+    flex-direction: row;
+  }
+  .tr{
+    display: flex;
+    justify-content:space-between;
+    color:#555555;
+    margin-left: 60rpx;
+    width:200rpx;
+
+    /*text-align:justify;*/
+  }
+  .book-text{
+    display: flex;
+    flex-direction: row;
+    margin-top: 50rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="title">{{msg.name}}</view>
+    <view class="book-info">
+      <view class="book-text">
+        <text class="tr">作者：</text>
+        <text>{{msg.author}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">出版社：</text>
+        <text>{{msg.chubanshe}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">索书号：</text>
+        <text style="color:blue">{{msg.booknumber}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">主题:</text>
+        <text>{{msg.topic}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">页数：</text>
+        <text>{{msg.yeshu}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">出版时间：</text>
+        <text>{{msg.time}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">ISBN：</text>
+        <text>{{msg.ISBN}}</text>
+      </view>
+      <view class="book-text">
+        <text class="tr">定价：</text>
+        <text>{{msg.pice}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy';
+  export default class Bookinfo extends wepy.page {
+    data = {
+      "msg": {
+        "ISBN": "978-7-300-25584-2",
+        "author": "唐钧著",
+        "chubanshe": "中国人民大学出版社",
+        "name": "新媒体时代的应急管理与危机公关",
+        "pice": " 48.00元",
+        "time": "2018.8 ",
+        "topic": "突发事件-公共管理",
+        "yeshu": "263页",
+        "zhaiyao": "领导干部悦读坊",
+        "booknumber": "D035.34/6"
+      },
+    }
+  }
+</script>

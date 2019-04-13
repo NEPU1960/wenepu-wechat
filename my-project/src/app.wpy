@@ -21,6 +21,8 @@ import configStore from './store'
 export default class extends wepy.app {
   config = {
     pages: [
+      "pages/bookinfo",
+      "pages/librarysearch",
       "pages/library",
       "pages/ecard",
       "pages/score",

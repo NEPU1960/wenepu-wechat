@@ -150,7 +150,7 @@
   export default class Score extends wepy.page {
     config={
       navigationBarTitleText: "成绩查询",
-    navigationBarBackgroundColor:"#3e9ecf"
+       navigationBarBackgroundColor:"#3e9ecf"
     }
     data = {
         "score": [
