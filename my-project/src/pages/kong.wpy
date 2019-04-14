@@ -1,0 +1,1812 @@
+<style lang="less">
+  page {
+    font-size: 0.7rem;
+    background: #f8f8f5;
+    color: #555;
+  }
+  .picker {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+ .thead{
+   display: flex;
+   /*font-size: 8pt;*/
+ }
+  .table {
+    padding: 0.5rem;
+    .row {
+      background: #efefef;
+      box-shadow: 4rpx 4rpx 8rpx #ddd;
+      &:nth-child(1) {
+        background: #efefef;
+      }
+      margin-top: 0.5rem;
+      display: flex;
+      view {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.2rem;
+      }
+      .item {
+        padding: 0.2rem 0;
+        color: #fffafa;
+        border-radius: 0.1rem;
+        view {
+          padding: 0.3rem 0;
+        }
+      }
+      .use {
+        box-shadow: 4rpx 4rpx 4rpx #ccc;
+        background: red;
+        color:white;
+      }
+      .not-use {
+        box-shadow: 4rpx 4rpx 4rpx #ccc;
+        background: #008e59;
+        color:white;
+      }
+    }
+  }
+</style>
+<template>
+  <view class="table">
+    <picker mode="multiSelector" range-key="name" @change="changeBuilding" @columnchange="columnchange" value="{{value}}" range="{{buildings}}" range-key="{{name}}">
+      <view class="picker">
+        <view>当前选择：{{building.addr}}-{{building.name}}</view>
+        <view>
+          点击切换
+        </view>
+      </view>
+    </picker>
+    <view class="thead row">
+      <view>教室</view>
+      <view>一大节</view>
+      <view>二大节</view>
+      <view>三大节</view>
+      <view>四大节</view>
+      <view>五大节</view>
+      <view>六大节</view>
+  </view>
+    <view wx:for="{{kong}}" wx:for-item="items">
+      <view class="row">
+        <view class="room-name">{{items.room}}</view>
+        <view class="{{items.one=='kx'?'not-use':'use'}}"> {{show[items.one]}}</view>
+        <view class="{{items.two=='kx'?'not-use':'use'}}"> {{show[items.two]}}</view>
+        <view class="{{items.three=='kx'?'not-use':'use'}}"> {{show[items.three]}}</view>
+        <view class="{{items.four=='kx'?'not-use':'use'}}"> {{show[items.four]}}</view>
+        <view class="{{items.five=='kx'?'not-use':'use'}}"> {{show[items.five]}}</view>
+        <view class="{{items.six=='kx'?'not-use':'use'}}"> {{show[items.six]}}</view>
+      </view>
+
+    </view>
+    <view></view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Kong extends wepy.page {
+    data={
+      buildings: {
+        name:'一教'
+          },
+      "show":{
+        "kx":"空闲",
+        "sk":"上课",
+        "jy":"借用",
+        "sd":"锁定",
+        "ks":"考试",
+        "guding":"固定",
+        "linshi":"临时",
+      },
+    "kong": [
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-112",
+        "roomID": "00016",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-114",
+        "roomID": "00018",
+        "six": "jy",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-115",
+        "roomID": "00019",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-118",
+        "roomID": "00020",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-119",
+        "roomID": "00021",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-212",
+        "roomID": "00030",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1F-214",
+        "roomID": "00031",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-215",
+        "roomID": "00032",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-216",
+        "roomID": "00033",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-219",
+        "roomID": "00034",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-220",
+        "roomID": "00035",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-311",
+        "roomID": "00043",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1F-313",
+        "roomID": "00044",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-314",
+        "roomID": "00045",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-315",
+        "roomID": "00046",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-318",
+        "roomID": "00047",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-319",
+        "roomID": "00048",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-411",
+        "roomID": "00056",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1F-413",
+        "roomID": "00057",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-414",
+        "roomID": "00058",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-415",
+        "roomID": "00059",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-418",
+        "roomID": "00060",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-419",
+        "roomID": "00061",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-510",
+        "roomID": "00068",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-511",
+        "roomID": "00069",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-512",
+        "roomID": "00070",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-513",
+        "roomID": "00071",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-516",
+        "roomID": "00072",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1F-517",
+        "roomID": "00073",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-102",
+        "roomID": "00010",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "jy",
+        "one": "jy",
+        "room": "1H-103",
+        "roomID": "00011",
+        "six": "kx",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-106",
+        "roomID": "00012",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-107",
+        "roomID": "00013",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-108",
+        "roomID": "00014",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-201",
+        "roomID": "00022",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-202",
+        "roomID": "00023",
+        "six": "kx",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-203",
+        "roomID": "00024",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-206",
+        "roomID": "00025",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-207",
+        "roomID": "00026",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-208",
+        "roomID": "00027",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-210",
+        "roomID": "00028",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "jy",
+        "one": "jy",
+        "room": "1H-211",
+        "roomID": "00029",
+        "six": "jy",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-301",
+        "roomID": "00036",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-302",
+        "roomID": "00037",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "sk",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-303",
+        "roomID": "00038",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-306",
+        "roomID": "00039",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-307",
+        "roomID": "00040",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-308",
+        "roomID": "00041",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-310",
+        "roomID": "00042",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-401",
+        "roomID": "00049",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-402",
+        "roomID": "00050",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-403",
+        "roomID": "00051",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-406",
+        "roomID": "00052",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-407",
+        "roomID": "00053",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-408",
+        "roomID": "00054",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-410",
+        "roomID": "00055",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-502",
+        "roomID": "00063",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "1H-503",
+        "roomID": "00064",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-506",
+        "roomID": "00065",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-507",
+        "roomID": "00066",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "1H-508",
+        "roomID": "00067",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-104",
+        "roomID": "00096",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-105",
+        "roomID": "00097",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-106",
+        "roomID": "00098",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-107",
+        "roomID": "00099",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-108",
+        "roomID": "00100",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-109",
+        "roomID": "00101",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-113",
+        "roomID": "00102",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-114",
+        "roomID": "00103",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-115",
+        "roomID": "00104",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-116",
+        "roomID": "00105",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "2A-119",
+        "roomID": "00106",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "jy",
+        "one": "jy",
+        "room": "2A-120",
+        "roomID": "00107",
+        "six": "kx",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-203",
+        "roomID": "00108",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-204",
+        "roomID": "00109",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-205",
+        "roomID": "00110",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-206",
+        "roomID": "00111",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-207",
+        "roomID": "00112",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "2A-208",
+        "roomID": "00113",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-211",
+        "roomID": "00114",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-212",
+        "roomID": "00115",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "jy",
+        "room": "2A-213",
+        "roomID": "00116",
+        "six": "jy",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-214",
+        "roomID": "00117",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-217",
+        "roomID": "00118",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-218",
+        "roomID": "00119",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-303",
+        "roomID": "00120",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-304",
+        "roomID": "00121",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-305",
+        "roomID": "00122",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-306",
+        "roomID": "00123",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-307",
+        "roomID": "00124",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-308",
+        "roomID": "00125",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-311",
+        "roomID": "00126",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-312",
+        "roomID": "00127",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-313",
+        "roomID": "00128",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-314",
+        "roomID": "00129",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-317",
+        "roomID": "00130",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-318",
+        "roomID": "00131",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-403",
+        "roomID": "00132",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-404",
+        "roomID": "00133",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-405",
+        "roomID": "00134",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-406",
+        "roomID": "00135",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-407",
+        "roomID": "00136",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-408",
+        "roomID": "00137",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-409",
+        "roomID": "00138",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-410",
+        "roomID": "00139",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-411",
+        "roomID": "00140",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "2A-412",
+        "roomID": "00141",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A106",
+        "roomID": "00348",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A108",
+        "roomID": "00349",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A109",
+        "roomID": "00350",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "jy",
+        "one": "jy",
+        "room": "主楼A208",
+        "roomID": "00353",
+        "six": "kx",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A210",
+        "roomID": "00354",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A211",
+        "roomID": "00355",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "jy",
+        "one": "jy",
+        "room": "主楼A214",
+        "roomID": "00356",
+        "six": "kx",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A311",
+        "roomID": "00362",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A407",
+        "roomID": "5D23FC7045874EBEAEFD437E03ECC846",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A408",
+        "roomID": "00366",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A409",
+        "roomID": "00367",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A507",
+        "roomID": "00448",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A508",
+        "roomID": "00449",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼A509",
+        "roomID": "00450",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B101",
+        "roomID": "00311",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B102",
+        "roomID": "864BE0E594E54CD9A4F9A8E86E6A1A6B",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B103",
+        "roomID": "00312",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B105",
+        "roomID": "00313",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B106",
+        "roomID": "9994B633D87943C99EE84EF130AF6752",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B108",
+        "roomID": "142B624E8B544A8991558A63695815A8",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B111",
+        "roomID": "00314",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B204",
+        "roomID": "00318",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B205",
+        "roomID": "00319",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B206",
+        "roomID": "00320",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B207",
+        "roomID": "00321",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B301",
+        "roomID": "00323",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "sk",
+        "room": "主楼B302",
+        "roomID": "00324",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B303",
+        "roomID": "00325",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B304",
+        "roomID": "00326",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B305",
+        "roomID": "00327",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B401",
+        "roomID": "00330",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B402",
+        "roomID": "00331",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B403",
+        "roomID": "00332",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B404",
+        "roomID": "00333",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B405",
+        "roomID": "00334",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B409",
+        "roomID": "3D60D1325BA34987B1C909A58FC9A420",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼B501",
+        "roomID": "77D5008729D44C1CAF49F9DDE98F0FB4",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "jy",
+        "one": "jy",
+        "room": "主楼B502",
+        "roomID": "00451",
+        "six": "jy",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "jy",
+        "one": "jy",
+        "room": "主楼B503",
+        "roomID": "00452",
+        "six": "jy",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "jy",
+        "four": "jy",
+        "one": "jy",
+        "room": "主楼C101",
+        "roomID": "00387",
+        "six": "jy",
+        "three": "jy",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C102",
+        "roomID": "00388",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "sk",
+        "one": "sk",
+        "room": "主楼C103",
+        "roomID": "00389",
+        "six": "kx",
+        "three": "sk",
+        "two": "sk"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "sk",
+        "room": "主楼C104",
+        "roomID": "00390",
+        "six": "kx",
+        "three": "kx",
+        "two": "sk"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C105",
+        "roomID": "00391",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "sk",
+        "room": "主楼C106",
+        "roomID": "00392",
+        "six": "kx",
+        "three": "kx",
+        "two": "sk"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C107",
+        "roomID": "00393",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "sk",
+        "one": "sk",
+        "room": "主楼C201",
+        "roomID": "00295",
+        "six": "kx",
+        "three": "sk",
+        "two": "sk"
+      },
+      {
+        "five": "kx",
+        "four": "sk",
+        "one": "jy",
+        "room": "主楼C202",
+        "roomID": "00296",
+        "six": "kx",
+        "three": "sk",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "主楼C203",
+        "roomID": "00297",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "主楼C204",
+        "roomID": "00298",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "jy",
+        "room": "主楼C205",
+        "roomID": "00394",
+        "six": "kx",
+        "three": "kx",
+        "two": "jy"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C301",
+        "roomID": "00299",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C302",
+        "roomID": "00300",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "sd",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C303",
+        "roomID": "00301",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C304",
+        "roomID": "00302",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C305",
+        "roomID": "B31190AB0F4D4FAAA0EE6A622871851E",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C401",
+        "roomID": "00303",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C402",
+        "roomID": "00304",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C403",
+        "roomID": "00305",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "kx",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C404",
+        "roomID": "00306",
+        "six": "kx",
+        "three": "jy",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C501",
+        "roomID": "00309",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C502",
+        "roomID": "00453",
+        "six": "kx",
+        "three": "kx",
+        "two": "kx"
+      },
+      {
+        "five": "jy",
+        "four": "kx",
+        "one": "kx",
+        "room": "主楼C503",
+        "roomID": "00454",
+        "six": "jy",
+        "three": "kx",
+        "two": "kx"
+      }
+      ],
+    "msg": "",
+    "status": true
+  }
+
+  }
+</script>

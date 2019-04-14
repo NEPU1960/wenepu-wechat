@@ -1,7 +1,13 @@
 <style lang="less">
+  page{
+    /*background-image: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/timg%20(2).jpg");*/
+    /*size:100%*/
+  }
 .title{
+  margin: 10rpx 15rpx 0rpx 15rpx;
   text-align: center;
   margin-top: 100rpx;
+  font-weight: bold;
 }
   .book-info{
     display: flex;
@@ -34,10 +40,11 @@
     background: none;
     -webkit-box-shadow: 8px 6px 24px -5px rgba(35,109,188,0.91) ;
     box-shadow: 8px 6px 24px -5px rgba(35,109,188,0.91) ;
+    background-color: #bfe2f0;
     /*box-shadow: 3px 3px 18px 3px rgba(28,164,255,0.91) ;*/
-    background: -webkit-linear-gradient(-90deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
-    background: -moz-linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);
+    /*background: -webkit-linear-gradient(-90deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);*/
+    /*background: -moz-linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);*/
+    /*background: linear-gradient(180deg, rgba(255,255,255,1) 0, rgba(58,162,232,1) 54%, rgba(150,196,224,1) 100%);*/
     text-shadow: none;
     -webkit-transition: none;
     -moz-transition: none;
@@ -56,7 +63,7 @@
     display: flex;
     justify-content:space-between;
     color:#555555;
-    margin-left: 60rpx;
+    margin-left: 25rpx;
     width:200rpx;
 
     /*text-align:justify;*/
@@ -109,6 +116,10 @@
 <script>
   import wepy from 'wepy';
   export default class Bookinfo extends wepy.page {
+    config={
+      navigationBarTitleText: "详细信息",
+      navigationBarBackgroundColor:"#3e9ecf"
+    }
     data = {
       "msg": {
         "ISBN": "978-7-300-25584-2",
