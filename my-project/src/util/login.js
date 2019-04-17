@@ -39,7 +39,7 @@ export default class Login {
         if (data.jwc_verify === 0 && data.verify === 0) {
           wx.showModal({
             title: '账号绑定', // 提示的标题,
-            content: '同学您好，您暂时未绑定教务处或统一认证中心账号\r\n如果您是研究生同学可以点击首页研究生按钮设置用户类型，再绑定统一认证中心账号\r\n若为本科同学请绑定教务处账号', // 提示的内容,
+            content: '同学您好，您暂时未绑定教务处账号', // 提示的内容,
             confirmColor: '#3CC51F', // 确定按钮的文字颜色,
             success: res => {}
           })

@@ -1,7 +1,7 @@
 const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 const domains = {
-  dev: 'https://api.nepu.club', // 测试api接口
-  prod: 'https://api.nepu.club' // api接口
+  dev: 'https://127.0.0.1:5000', // 测试api接口
+  prod: 'https://127.0.0.1:5000' // api接口
 }
 export const domain = domains[env]
 export const version = '0.8.0' // 版本号

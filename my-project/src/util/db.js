@@ -1,6 +1,6 @@
-let prefix = "scuplus.dev."
+let prefix = "wenepu.dev."
 if (process.env.NODE_ENV == "production") {
-  prefix = "scuplus.production."
+  prefix = "wenepu.production."
 }
 
 const Set = (key, value) => {

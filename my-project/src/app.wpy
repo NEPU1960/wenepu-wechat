@@ -15,34 +15,24 @@
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
-import { setStore } from 'wepy-redux'
-import configStore from './store'
+// import { setStore } from 'wepy-redux'
+// import configStore from './store'
 
 export default class extends wepy.app {
   config = {
     pages: [
-
+      'pages/login',
+      "pages/index",
+      "pages/image",
       "pages/kong",
       "pages/bookinfo",
-
-      'pages/login',
       'pages/newsLists',
-      "pages/index",
       "pages/lessons",
       "pages/score",
-
       "pages/ecard",
-
       "pages/library",
       "pages/librarysearch",
-
-
-
-
-
-
       'pages/my',
-
       'pages/schedule',
     ],
     window: {

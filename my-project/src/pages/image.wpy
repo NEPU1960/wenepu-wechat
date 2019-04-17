@@ -1,0 +1,148 @@
+<style lang="less">
+  /**index.wxss**/
+  .container{
+    padding-bottom: 0;
+    background-color: #f0eff5;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom center;
+    background-image: url('http://nepunmc.cn/wenepu/back.png');
+  }
+  .swiper {
+    width: 100%;
+    z-index: 99;
+    top: 0;
+    swiper-item {
+      width: 100%;
+    }
+    image {
+      z-index: 30;
+      width: 100%;
+    }
+  }
+  /**功能导航**/
+  .main-core{
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    background: #fff;
+    border-bottom: 1rpx solid #e5e5e5;
+    padding: 15rpx 10rpx 10rpx;
+    min-height: 350rpx;
+    overflow: hidden;
+  }
+  .main-core-item{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 20%;
+    height: 170rpx;
+  }
+  .main-core-item.disabled{
+    color: #9c9c9c;
+  }
+  .core-item-icon{
+    display: block;
+    width: 85rpx;
+    height: 85rpx;
+    margin: 15rpx auto;
+  }
+  .core-item-name{
+    display: flex;
+    margin: 4rpx;
+    font-size: 30rpx;
+  }
+  .main-swpier{
+    height:390rpx;
+    margin-bottom:20rpx;
+  }
+  .main-swpier .wx-swiper-dots.wx-swiper-dots-horizontal{
+    bottom: 0;
+    margin-bottom: -5rpx;
+  }
+  .main-ending{
+    /*display: none;*/
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 75rpx;
+    overflow: hidden;
+  }
+  .main-ending-text{
+    /*width: 72pt;*/
+    color: #3e9ecf;
+    font-size: 8pt;
+    padding: 0 16rpx;
+    text-align: center;
+    /*white-space: nowrap;*/
+  }
+  .main-ending-line{
+    width: 100%;
+    height: 0;
+    border-top: 1rpx solid #e5e5e5;
+  }
+  .main-ending-bq{
+    text-align: center;
+  }
+</style>
+
+<template>
+  <view>
+    <!-- 公告区, 用于置放最新公告,头条新闻,推广消息 -->
+    <swiper style="height: {{swiper_height}}px;" class="swiper" autoplay="true" >
+      <block wx:for="{{notices}}" wx:key="{{index}}">
+        <swiper-item>
+          <!--          <navigator wx:if="{{item.wxid != ''}}" target="miniProgram" open-type="navigate" app-id="{{item.wxid}}" path="{{item.abstract}}" extra-data="" version="release">-->
+          <image style="height:{{swiper_height}}px;" src="	https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/ecard.png" />
+          <!--          </navigator>-->
+          <!--          <image wx:else style="height:{{swiper_height}}px;" @tap="noticeTo({{item.id}})" src="{{item.cover}}" class="slide-image" />-->
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</template>
+
+<script >
+  import wepy from 'wepy';
+  // import MView from 'components/mview';
+  import Card from 'components/card';
+  import Empty from 'components/empty';
+  export default class Image extends wepy.page{
+    components = {
+      // mview: MView,
+      "schedule-card": Card,
+      "book-card": Card,
+      ecard: Card,
+      "exam-card": Card,
+    }
+    data= {
+      notices: [
+        {
+          cover:
+            "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
+          id: 1
+        }
+      ],
+      swiper_height: 200,
+      offline: false,
+      remind: '加载中',
+      cores: [
+        [
+          { id: 'kb', name: '课表查询', disabled: false, teacher_disabled: false, offline_disabled: false },
+          { id: 'cj', name: '成绩查询', disabled: false, teacher_disabled: true, offline_disabled: false },
+          { id: 'ks', name: '考试安排', disabled: false, teacher_disabled: false, offline_disabled: false },
+          { id: 'kjs', name: '空教室', disabled: false, teacher_disabled: false, offline_disabled: true },
+          { id: 'xs', name: '学生查询', disabled: false, teacher_disabled: false, offline_disabled: true },
+          { id: 'ykt', name: '一卡通', disabled: false, teacher_disabled: false, offline_disabled: false },
+          { id: 'jy', name: '借阅信息', disabled: false, teacher_disabled: false, offline_disabled: false },
+          { id: 'xf', name: '学费信息', disabled: false, teacher_disabled: true, offline_disabled: false },
+          { id: 'sdf', name: '电费查询', disabled: false, teacher_disabled: true, offline_disabled: false },
+          { id: 'bx', name: '物业报修', disabled: false, teacher_disabled: false, offline_disabled: true }
+        ]
+      ]}
+  }
+</script>
