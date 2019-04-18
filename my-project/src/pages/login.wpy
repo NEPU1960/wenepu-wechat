@@ -16,11 +16,11 @@
           <form class="login-form" @submit="bind">
             <view class="input-group">
               <text class="input-label">帐号</text>
-              <input type="number" name="userid" maxlength="12" placeholder="请输入学号" />
+              <input type="number" name="studentid" maxlength="12" placeholder="请输入学号" value="130101140323"/>
             </view>
             <view class="input-group">
               <text class="input-label">密码</text>
-              <input password="true" name="passwd" placeholder="初始密码为学号"   />
+              <input password="true" name="passwd" placeholder="初始密码为学号" value="032050"/>
             </view>
             <view class="login-help" >
               <text>忘记密码</text>
@@ -58,10 +58,10 @@
   </view>
 </template>
 <script>
-  import wepy from 'wepy';
-  import HttpMixin from "mixins/http";
-  import ToastMixin from "mixins/toast";
-  import db from "util/db";
+  import wepy from 'wepy'
+  // import HttpMixin from "mixins/http";
+  // import ToastMixin from "mixins/toast";
+  // import db from "util/db";
   export default class Login extends wepy.page {
     config = {
       "navigationBarTitleText": "登陆",
@@ -69,12 +69,15 @@
       "disableScroll": true,
       // "navigationStyle":"custom",
     };
-    mixins = [HttpMixin,ToastMixin];
+    // mixins = [HttpMixin,ToastMixin];
     methods = {
       bind(e) {
         let params = e.detail.value;
-        if (params.userid == 0 || params.passwd == "") {
-          this.ShowToast("学号密码必填！");
+        if (params.studentid == 0 || params.passwd == "") {
+          // this.ShowToast("学号密码必填！");
+          wepy.ShowToast({
+            title:"学号密码必填！"
+          });
           return;
         }
         this.Bind(params);
@@ -84,22 +87,91 @@
     };
     async Bind(params) {
       try {
-        if (db.Get(this.types[this.type].verify) == 1) {
-          await this.notice();
-        }
-        const res = await this.POST(this.types[this.type].url || "/auth", params);
-        db.Set(this.types[this.type].verify || "verify", 1);
-        wepy.showModal({
-          title: "绑定成功",
-          content: "点击确认掉转到首页，请在首页点击查看we川大使用说明！",
-          showCancel: false,
-          success: function(res) {
-            // 关闭所有页面并且跳转到首页，确保verify数据重新获取
-            wepy.reLaunch({
-              url: "/pages/index"
-            });
+        // if (db.Get(this.types[this.type].verify) == 1) {
+        //   await this.notice();
+        // }
+        // const res = await this.POST(this.types[this.type].url || "/auth", params);
+        // db.Set(this.types[this.type].verify || "verify", 1);
+        // wx.request({
+        //   url:"http://127.0.0.1:5000/auth",
+        //   // header: {'content-type': 'application/json'},
+        //   data:params,
+        //   method:'POST',
+        //   success(res){
+        //     console.log(res.data)
+        //   }
+        // });
+        wepy.showLoading({
+          title: '登录中...', //提示的内容,
+          mask: true, //显示透明蒙层，防止触摸穿透,
+        });
+        
+        wepy.request({
+          url: "http://127.0.0.1:5000/auth/",
+          method: 'POST',
+          data: params,
+          header: 'application/json',
+          success: (res)=>{
+            console.log(res.data)
+            console.log(res.data.data)
+            console.log(res.data.status)
+            if(res.data.status==true){
+               wepy.showModal({
+                  title: "绑定成功",
+                  content: "点击确认掉转会首页，请在首页点击查看使用说明！",
+                  showCancel: false,
+                  success: function(res) {
+                    // 关闭所有页面并且跳转到首页，确保verify数据重新获取
+                    wepy.reLaunch({
+                      url: "/pages/index"
+                    });
+                  }
+                });
+                wepy.setStorage({
+                  key: 'token',
+                  data: res.data.data.header
+                });
+                wepy.setStorage({
+                  key: 'library_status',
+                  data: res.data.data.library_status
+                });
+                wepy.setStorage({
+                  key: 'ecard_status',
+                  value: res.data.data.ecard_status
+                });
+                 wepy.setStorage({
+                  key: 'jw_status',
+                  value: "1"
+                });
+                wepy.setStorage({
+                  key: 'library',
+                  value: res.data.data.library
+                });
+                wepy.setStorage({
+                  key: 'kb',
+                  data: res.data.data.jw.kb
+                });
+                wepy.setStorage({
+                  key: 'score',
+                  data: res.data.data.jw.score
+                });
+            }
+            else{
+               wepy.showModal({
+                  title: "登录错误",
+                  content: res.data.msg,
+                  showCancel: false,
+                  success: function(res) {
+                    // 
+                    
+                  }
+                });
+            }},
+          complete:(res)=>{
+            wepy.hideLoading();
           }
         });
+       
       } catch (error) {
         console.log(error);
       }
@@ -107,7 +179,6 @@
   }
 </script>
 <style lang="less">
-  /**login.wxss**/
   .container {
     background: #0388ac;
     align-items: stretch;

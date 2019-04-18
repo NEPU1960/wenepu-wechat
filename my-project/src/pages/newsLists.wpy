@@ -16,7 +16,7 @@
   .info {
     color: #999;
     width: 100%;
-    margin-top: 0.5rem;
+    // margin-top: 20rpx;
     font-size: 24rpx;
     display: flex;
     justify-content: space-between;
@@ -28,16 +28,16 @@
 }
 </style>
 <template>
-  <view class="lists">
+  <view wx:for="{{news_list}}" wx:for-item="items" class="lists">
     <view class="title">
-      测试文章标题
+      {{items.name}}
     </view>
     <view class="info">
         <view class="tag">
           #新闻网#
         </view>
         <view class="time">
-          2019-04-03
+          {{items.time}}
         </view>
     </view>
   </view>
@@ -45,6 +45,35 @@
 <script>
   import wepy from 'wepy';
   export default class NewsList extends wepy.page{
+    config={
+      navigationBarTitleText: "新闻资讯",
+
+    };
+    data={
+       "news_list": [],
+    };
+    get_list(){
+      wepy.request({
+        url: 'http://127.0.0.1:5000/api/news/newslist',
+        method: 'GET',
+        header: 'application/x-www-form-urlencoded',
+        success: (res)=>{
+          console.log(res.data.data)
+          this.news_list=res.data.data
+          this.$apply();
+        },
+        fail: ()=>{}
+      });
+    }
+    onLoad(){
+      this.get_list()
+
+    };
+    onShareAppMessage(options) {
+    return {
+      title: "最新资讯"
+    };
+  }
 
   }
 </script>
