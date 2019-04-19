@@ -16,11 +16,11 @@
           <form class="login-form" @submit="bind">
             <view class="input-group">
               <text class="input-label">帐号</text>
-              <input type="number" name="studentid" maxlength="12" placeholder="请输入学号" value="130101140323"/>
+              <input type="number" name="studentid" maxlength="12" placeholder="请输入学号" value="161201440101"/>
             </view>
             <view class="input-group">
               <text class="input-label">密码</text>
-              <input password="true" name="passwd" placeholder="初始密码为学号" value="032050"/>
+              <input password="true" name="passwd" placeholder="初始密码为学号" value="101044102161"/>
             </view>
             <view class="login-help" >
               <text>忘记密码</text>
@@ -114,19 +114,8 @@
           success: (res)=>{
             console.log(res.data)
             console.log(res.data.data)
-            console.log(res.data.status)
+            console.log(res.data.data.jw_status)
             if(res.data.status==true){
-               wepy.showModal({
-                  title: "绑定成功",
-                  content: "点击确认掉转会首页，请在首页点击查看使用说明！",
-                  showCancel: false,
-                  success: function(res) {
-                    // 关闭所有页面并且跳转到首页，确保verify数据重新获取
-                    wepy.reLaunch({
-                      url: "/pages/index"
-                    });
-                  }
-                });
                 wepy.setStorage({
                   key: 'token',
                   data: res.data.data.header
@@ -139,10 +128,7 @@
                   key: 'ecard_status',
                   value: res.data.data.ecard_status
                 });
-                 wepy.setStorage({
-                  key: 'jw_status',
-                  value: "1"
-                });
+                 wx.setStorageSync('admin', res.data.data.jw_status);
                 wepy.setStorage({
                   key: 'library',
                   value: res.data.data.library
@@ -155,6 +141,23 @@
                   key: 'score',
                   data: res.data.data.jw.score
                 });
+                wx.getStorage({
+                  key: 'admin',
+                  success: res => {
+                    console.log(res)
+                  }
+                })
+                wepy.showModal({
+                  title: "绑定成功",
+                  content: "点击确认掉转会首页，请在首页点击查看使用说明！",
+                  showCancel: false,
+                  success: function(res) {
+                    // 关闭所有页面并且跳转到首页，确保verify数据重新获取
+                    wepy.reLaunch({
+                      url: "/pages/index"
+                    });
+                  }
+                });
             }
             else{
                wepy.showModal({
@@ -162,8 +165,7 @@
                   content: res.data.msg,
                   showCancel: false,
                   success: function(res) {
-                    // 
-                    
+                    wx.clearStorage()
                   }
                 });
             }},

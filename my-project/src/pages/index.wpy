@@ -103,6 +103,8 @@
     width: 100%;
     margin-top: 75rpx;
     overflow: hidden;
+    // position:fixed;
+    // bottom:0px; 
   }
   .main-ending-text{
     /*width: 72pt;*/
@@ -142,10 +144,10 @@
     <swiper class="main-swpier" indicator-dots="true" indicator-active-color="#73b4ef">
       <swiper-item class="main-core" wx:for="{{cores}}"  wx:for-item="core" wx:key="id" >
         <block wx:for="{{core}}" wx:key="id">
-          <navigator class="main-core-item" url="{{'/pages/'+item.src}}">
+          <view class="main-core-item"  @tap='to({{item}})'>
             <image class="core-item-icon" src="/images/core/{{item.id}}.png"/>
             <text class="core-item-name">{{item.name}}</text>
-          </navigator>
+          </view>
         </block>
       </swiper-item>
     </swiper>
@@ -220,33 +222,96 @@ export default class Index extends wepy.page{
     notices: [
       {
         cover:
-          "https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/ecard.png",
+          "https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/index1.JPG",
         id: 1
       },
       {
         cover:
-        "https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/tooopen_sy_154230423075891.jpg",
+        "	https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/index.jpg",
         id:2
       }
     ],
+    jwc_status:'',
     swiper_height: 200,
     offline: false,
     remind: '加载中',
     cores: [
       [
-        { id: 'kb', name: '课表查询',src:'lessons', disabled: false, teacher_disabled: false, offline_disabled: false },
-        { id: 'cj', name: '成绩查询', src:'score',disabled: false, teacher_disabled: true, offline_disabled: false },
-        { id: 'kjs', name: '空教室', src:'kong',disabled: false, teacher_disabled: false, offline_disabled: true },
-        { id: 'jy', name: '借阅信息', src:'library',disabled: false, teacher_disabled: false, offline_disabled: false },
-        { id: 'ks', name: '图书检索', src:'librarysearch',disabled: false, teacher_disabled: false, offline_disabled: false },
-        { id: 'ykt', name: '一卡通', src:'ecard',disabled: false, teacher_disabled: false, offline_disabled: false },
+        { id: 'kb', name: '课表查询',src:'lessons', disabled: true},
+        { id: 'cj', name: '成绩查询', src:'score',disabled: true, teacher_disabled: true, offline_disabled: false },
+        { id: 'kjs', name: '空教室', src:'kong',disabled: true, teacher_disabled: false, offline_disabled: true },
+        { id: 'jy', name: '借阅信息', src:'library',disabled: true, teacher_disabled: false, offline_disabled: false },
+        { id: 'ks', name: '图书检索', src:'librarysearch',disabled: true, teacher_disabled: false, offline_disabled: false },
+        { id: 'ykt', name: '一卡通', src:'ecard',disabled: true, teacher_disabled: false, offline_disabled: false },
         { id: 'xs', name: '大物实验', disabled: false, teacher_disabled: false, offline_disabled: true },
         { id: 'xf', name: '校园导览', disabled: false, teacher_disabled: true, offline_disabled: false },
-        { id: 'bx', name: '物业报修', disabled: false, teacher_disabled: false, offline_disabled: true },
-        { id: 'sdf', name: '校历查询', disabled: false, teacher_disabled: true, offline_disabled: false },
+        { id: 'bx', name: '反馈', disabled: false, teacher_disabled: false, offline_disabled: true },
+        { id: 'sdf', name: '校历查询', src:'login',disabled: true, teacher_disabled: true, offline_disabled: false },
         ]
-      ]}
+      ]};
+    navigateto(item){
+      console.log(item)
+      if(this.jwc_status==1){
+        if(item.disabled==true){
+          wepy.navigateTo({
+          url: `/pages/${item.src}`
+          });
+      }
+      else{
+        wepy.showModal({
+          title: "暂时不能访问",
+          content: "功能正在开发中，暂时不能使用，请耐心等待",
+          showCancel: false,
+          cancelText: '取消',
+          cancelColor: '#000000',
+          confirmText: '确定',
+          confirmColor: '#3CC51F',
+          success: res => {
+            if(res.confirm){}
+          }
+        });
+      }
+      }
+      else{
+         wepy.showModal({
+        title: "账号信息错误", //提示的标题,
+        content: "账号未绑定或密码错误！是否前往绑定？", //提示的内容,
+        showCancel: true, //是否显示取消按钮,
+        cancelText: '取消', //取消按钮的文字，默认为取消，最多 4 个字符,
+        cancelColor: '#000000', //取消按钮的文字颜色,
+        confirmText: '确定', //确定按钮的文字，默认为取消，最多 4 个字符,
+        confirmColor: '#3CC51F', //确定按钮的文字颜色,
+        success: res => {  
+          wepy.navigateTo({
+                url: "/pages/login"
+              });}
+      })
+    }
+    }
+    methods={
+      to(item){
+        this.navigateto(item)
+      }
+    };
   onLoad(){
+    // wx.setStorageSync('check', 1);
+    
+    wepy.getStorage({
+      key: 'admin',
+      success: res => {
+        console.log(res.data)
+        this.jwc_status=res.data
+        this.$apply()
+      }
+    });
+    wepy.getStorage({
+      key: 'score',
+      success: res => {
+        console.log(res)
+      }
+    });
+    wepy.getStorageInfo({ success: res => {console.log(res)} });
+    
 
 }
 }

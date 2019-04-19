@@ -22,7 +22,7 @@
 </style>
 
 <template>
-  <view class="share-c" style="display: {{isShow ? 'block' : 'none'}} ;">
+  <view @touchstart="moveStart" @touchend="moveEnd" class="share-c" style="display: {{isShow ? 'block' : 'none'}} ;">
     <view class="share" style="display: {{isShow ? 'block' : 'none'}} ;">
       <canvas disable-scroll="true" style="width: 200px; height: 290px;" canvas-id="m"></canvas>
       <button type="warn" @tap="save">保存图片</button>
