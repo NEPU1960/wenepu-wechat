@@ -22,7 +22,7 @@
 </style>
 
 <template>
-  <view @touchstart="moveStart" @touchend="moveEnd" class="share-c" style="display: {{isShow ? 'block' : 'none'}} ;">
+  <view class="share-c" style="display: {{isShow ? 'block' : 'none'}} ;">
     <view class="share" style="display: {{isShow ? 'block' : 'none'}} ;">
       <canvas disable-scroll="true" style="width: 200px; height: 290px;" canvas-id="m"></canvas>
       <button type="warn" @tap="save">保存图片</button>
@@ -33,12 +33,6 @@
 <script>
   import wepy from "wepy";
   import htmlParser from "components/htmlParser";
-  import HttpMixin from "mixins/http";
-  import ToastMixin from "mixins/toast";
-  import db from "util/db";
-  import {
-    domain
-  } from 'config'
   export default class Share extends wepy.component {
     components = {};
     props = {
@@ -48,7 +42,7 @@
       isShow: false,
       x: 0
     }
-    mixins = [HttpMixin, ToastMixin];
+    // mixins = [HttpMixin];
     methods = {
       moveStart(e) {
         this.x = e.touches[0].clientY
@@ -58,14 +52,10 @@
         if (Math.abs(changedX) > 80) this.isShow = false;
       },
       async save() {
-        try {
-          const path = await this.canvasToTmp("m")
-          const res = await this.saveImage(path)
-          console.log(res);
-          this.ShowToast("图片保存成功，请到朋友圈分享", "success")
-        } catch (err) {
-          this.ShowToast("保存失败")
-        }
+       
+        const path = await this.canvasToTmp("m")
+        const res = await this.saveImage(path)
+        console.log(res);
         this.isShow = false;
         this.$apply()
       },
@@ -115,7 +105,7 @@
           // 绘制左下角引导语
           ctx.setFontSize(12);
           y += lineHeight + 8
-          ctx.fillText("长按识别We川大", 10, y + lineHeight * 2 + 5);
+          ctx.fillText("长按识别We东油", 10, y + lineHeight * 2 + 5);
           ctx.fillText("查看完整内容", 10, y + lineHeight * 3 + 5);
           // 绘制右下角小程序码
           const path = await this.download("/wechat/qcode?" + params);
@@ -124,7 +114,7 @@
           ctx.draw();
         } catch (error) {
           console.log(error);
-          this.ShowToast("绘制分享图片失败！")
+          // this.ShowToast("绘制分享图片失败！")
           this.isShow = false;
           this.$apply();
         }

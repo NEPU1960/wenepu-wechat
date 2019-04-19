@@ -1,5 +1,5 @@
 <style lang="less">
-
+@base-color: #f06292;
 .lists {
   padding: 0.5rem;
   background: #fff;
@@ -26,19 +26,84 @@
     }
   }
 }
+.tag-tabs {
+  width: 100%;
+  height: 80rpx;
+  position: fixed;
+  top: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  color: #666;
+  z-index: 100;
+  .tabs {
+    background: #fff;
+    z-index: 110;
+    width: calc(~"100% - 100rpx");
+    .tabs-view {
+      align-items: center;
+      display: flex;
+      flex-wrap: nowrap;
+      height: 80rpx;
+      justify-content: flex-start;
+      white-space: nowrap;
+      view {
+        display: inline-flex;
+        margin-right: 20rpx;
+        &.active {
+          color: @base-color;
+        }
+      }
+    }
+  }
+  .icon {
+    display: flex;
+    width: 80rpx;
+    z-index: 200;
+  }
+}
+.news_list{
+  margin-top: 90rpx
+}
+page {
+  background: #eee;
+  width: 100%;
+  height: 100%;
+}
 </style>
 <template>
-  <view wx:for="{{news_list}}" wx:for-item="items" class="lists">
-    <view class="title">
-      {{items.name}}
+  <view>
+    <view class="tag-tabs">
+          <scroll-view scroll-x class="tabs">
+            <view class="tabs-view">
+              <block wx:for="{{tabs}}" wx:key="{{index}}">
+                <view class="tab {{active == index ? 'active' : ''}}" @tap="tabHandle({{index}})">{{item.name}}</view>
+              </block>
+            </view>
+          </scroll-view>
+          <view @tap="to" class="icon">
+            <view class="iconfont icon-daohang"></view>
+          </view>
     </view>
-    <view class="info">
-        <view class="tag">
-          #新闻网#
+    <view class="news_list">
+      <view wx:for="{{news_list}}" wx:for-item="items" class="lists" >
+        <view bindtap="tonav({{items.link}})">
+          <view class="title">
+            {{items.name}}
+          </view>
+          <view class="info">
+              <view class="tag">
+                #新闻网#
+              </view>
+              <view class="time">
+                {{items.time}}
+              </view>
+          </view> 
         </view>
-        <view class="time">
-          {{items.time}}
-        </view>
+    </view>
     </view>
   </view>
 </template>
@@ -49,14 +114,23 @@
       navigationBarTitleText: "新闻资讯",
 
     };
+    
     data={
        "news_list": [],
+       "tabs":[{name:'全部'},{name:"新闻网"},{name:"教务处"},{name:"学生工作处"},{name:"研究生部"}]
     };
+    methods={
+      tonav(items){
+        console.log(items)
+        wepy.navigateTo({ url: `/pages/details?url=${items}`});
+        
+      }
+    }
     get_list(){
       wepy.request({
         url: 'http://127.0.0.1:5000/api/news/newslist',
         method: 'GET',
-        header: 'application/x-www-form-urlencoded',
+        // header: 'application/x-www-form-urlencoded',
         success: (res)=>{
           console.log(res.data.data)
           this.news_list=res.data.data
@@ -67,7 +141,6 @@
     }
     onLoad(){
       this.get_list()
-
     };
     onShareAppMessage(options) {
     return {
