@@ -20,10 +20,9 @@ import "wepy-async-function";
 export default class extends wepy.app {
   config = {
     pages: [
-      "pages/newsLists",
       "pages/index",
+      "pages/newsLists",
       "pages/details",
-      
       "pages/login",
       "pages/image",
       "pages/kong",
