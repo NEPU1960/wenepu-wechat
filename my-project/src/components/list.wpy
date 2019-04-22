@@ -65,12 +65,12 @@ scroll-view {
 
 <script>
 import wepy from "wepy";
-import HttpMixin from "mixins/http";
-import ToastMixin from "mixins/toast";
+// import HttpMixin from "mixins/http";
+// import ToastMixin from "mixins/toast";
 import Empty from "components/empty";
-import ADConfig from "util/ad";
-export default class List extends wepy.component {
-  mixins = [HttpMixin, ToastMixin];
+// import ADConfig from "util/ad";
+export default class List extends wepy.page {
+  // mixins = [HttpMixin, ToastMixin];
   components = {
     empty: Empty
   };
@@ -95,11 +95,11 @@ export default class List extends wepy.component {
     scrollTop: 0,
     isNone: false
   };
-  computed = {
-    adShow() {
-      return ADConfig.Get("newsLists");
-    }
-  };
+  // computed = {
+  //   adShow() {
+  //     return ADConfig.Get("newsLists");
+  //   }
+  // };
   methods = {
     updateLists() {
       this.page++;

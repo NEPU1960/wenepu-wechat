@@ -1,4 +1,18 @@
 <style lang="less">
+.header {
+  box-shadow: 4rpx 4rpx 10rpx #ddd;
+  .none {
+    text-align: center;
+    background: #fff;
+  }
+  .grade-header {
+    border-radius: 0.2rem;
+    .title {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
   .title{
     font-size: 12pt;
     margin-right: 15rpx;
@@ -108,13 +122,21 @@
 <!--    题头-->
     <view class="header">
     <view class="grade-header">
+      <view class="title">
+            <view>
+              <text>全部成绩</text>
+            </view>
+            <view>
+              <view @tap="up" class="iconfont icon-update"></view>
+            </view>
+          </view>
       <view class="info">
-        <text >已修学分：{{xuefen.finish}}</text>
-        <text >应修学分：{{xuefen.total}}</text>
+        <text >已修学分：{{score.xuefen.finish}}</text>
+        <text >应修学分：{{score.xuefen.total}}</text>
       </view>
       <view class="info">
-        <text >未修学分：{{xuefen.last}}</text>
-        <text >平均分绩点:{{xuefen.grade}}</text>
+        <text >未修学分：{{score.xuefen.last}}</text>
+        <text >平均分绩点:{{score.xuefen.grade}}</text>
       </view>
     </view>
   </view>
@@ -122,7 +144,7 @@
     <view >
 
 <!--      <view class="cj-info-ctn">-->
-        <view class="cj-info-box" wx:for="{{score}}" wx:for-item="xueqi" >
+        <view class="cj-info-box" wx:for="{{score.score}}" wx:for-item="xueqi" >
           <view wx:for="{{xueqi}}" wx:for-item="ceshi" wx:key="{{bindex}}">
             <view class="xueqi-title">
                 <view>{{index}}</view>
@@ -150,9 +172,11 @@
   export default class Score extends wepy.page {
     config={
       navigationBarTitleText: "成绩查询",
-       navigationBarBackgroundColor:"#3e9ecf"
+       navigationBarBackgroundColor:"#3e9ecf",
+        enablePullDownRefresh: true
     }
     data = {
+      "score":{
         "score": '',
         "xuefen": {
           "finish": "",
@@ -161,15 +185,80 @@
           "total": ""
         }
       }
-    onLoad(){
+      }
+    // 更新成绩
+    async get_token(){
+      wepy.getStorage({
+        key: 'token',
+        success: res => {
+          console.log(res.data)
+          return res.data
+        }
+      });
+    }
+    async updata(){
+      wepy.request({
+        url: "http://127.0.0.1:5000/api/jwc/score_updata",
+        method: 'GET',
+        header: {'Authorization':wx.getStorageSync('token')},
+        success: (res)=>{
+          console.log(res.data)
+          let score=res.data.data
+          this.score=score
+          // this.xuefen.finish=res.data.xuefen.finish
+          // this.xuefen.grade=res.data.xuefen.grade
+          // this.xuefen.last=res.data.xuefen.last
+          // this.xuefen.total=res.data.xuefen.total
+          this.$apply()
+          // this.setData({'score':'score'})
+          this.InitSet("score", score);
+        },
+        fail: ()=>{}
+      });
+    }
+    methods={
+      up(){
+        this.get_token()
+        this.updata()
+      }
+    };
+  async graduateUpdate() {
+    try {
+      await this.POST("/graduate/grades");
+      this.get();
+    } catch (error) {
+      console.log(error);
+    }
+    wepy.stopPullDownRefresh();
+  }
+  async updateGrade() {
+    try {
+      await this.POST("/user/grade");
+      this.get();
+    } catch (error) {
+      console.log(error);
+    }
+    wepy.stopPullDownRefresh();
+  }
+  onPullDownRefresh() {
+    // if (this.isGraduate) {
+    //   this.graduateUpdate();
+    // } else {
+    //   this.updateGrade();
+    // }
+    this.updata()
+  }
+  // async onLoad() {
+  //   await this.Init("grades");
+  //   this.calAllGrades();
+  // }
+  onLoad(){
+    // this.updata()
       wepy.getStorage({
         key: 'score',
         success: res => {
-          this.score=res.data.score
-          this.xuefen.finish=res.data.xuefen.finish
-          this.xuefen.grade=res.data.xuefen.grade
-          this.xuefen.last=res.data.xuefen.last
-          this.xuefen.total=res.data.xuefen.total
+          this.score=res.data
+          console(res.data)
           this.$apply()
         }
       });
