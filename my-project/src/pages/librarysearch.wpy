@@ -1,5 +1,5 @@
 <style lang="less">
-  @import "../less/main.wxss";
+  // @import "../less/main.wxss";
   @import "../less/icon.wxss";
   .card{
     margin-top: 150rpx;
@@ -68,43 +68,23 @@
     }
     data={
 
-      "datas": [
-        {
-          "ISBN": "978-7-300-25584-2",
-          "bookauth": "唐钧著",
-          "bookname": "新媒体时代的应急管理与危机公关",
-          "booknumber": "D035.34/6",
-          "bookpress": "北京:中国人民大学出版社",
-          "date": "2018.8",
-          "herf": "http://210.46.140.21:8080/opac/ckgc.jsp?kzh=zyk0530145"
+      "datas": ""
+    }
+    search(name){
+      wepy.request({
+        url: "http://127.0.0.1:5000/api/library/search",
+        method: 'POST',
+        data: {
+          "book_name":name,
+          "page":1,
         },
-        {
-          "ISBN": "978-7-121-33341-5",
-          "bookauth": "仇勇著",
-          "bookname": "新媒体革命2.0算法时代的媒介、公关与传播",
-          "booknumber": "G206.2/286",
-          "bookpress": "北京:电子工业出版社",
-          "date": "2018.03",
-          "herf": "http://210.46.140.21:8080/opac/ckgc.jsp?kzh=zyk0528477"
+        header: 'application/x-www-form-urlencoded',
+        success: (res)=>{
+          this.datas=res.data.data
+          this.$apply()
         },
-        {
-          "ISBN": "978-7-5201-0959-8",
-          "bookauth": "主编唐绪军",
-          "bookname": "中国新媒体发展报告2017 No. 8 2017",
-          "booknumber": "G219.2/82",
-          "bookpress": "北京:社会科学文献出版社",
-          "date": "2017.7",
-          "herf": "http://210.46.140.21:8080/opac/ckgc.jsp?kzh=zyk0521313"
-        },
-        {
-          "ISBN": "978-7-5086-7327-1",
-          "bookauth": "万达集团企业文化中心编写",
-          "bookname": "万达新媒体工作法",
-          "booknumber": "G219.2/68",
-          "bookpress": "北京:中信出版集团",
-          "date": "2017.5",
-          "herf": "http://210.46.140.21:8080/opac/ckgc.jsp?kzh=zyk0512127"
-        }]
+        fail: ()=>{}
+      });
     }
 
   }

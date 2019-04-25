@@ -287,44 +287,24 @@
 <script>
   import wepy from 'wepy';
   export default class Library extends wepy.page{
-    data={"library": {
-        "booklist": [
-          {
-            "author": "关保英著",
-            "bookid": "01362903",
-            "bookname": "行政法案例教程",
-            "canceleixing": "普通图书",
-            "diancangdi": "社科书库(217室)",
-            "guancangdanwei": "东北石油大学图书馆",
-            "huantime": "2019-05-31 20:54:38",
-            "id": "",
-            "jitime": "2019-04-01 20:54:38",
-            "juanqi": "",
-            "lastday": 49,
-            "status": "正常",
-            "xujiecishu": "0",
-            "xujietime": ""
-          },
-          {
-            "author": "关保英著",
-            "bookid": "01362903",
-            "bookname": "行政法案例教程",
-            "canceleixing": "普通图书",
-            "diancangdi": "社科书库(217室)",
-            "guancangdanwei": "东北石油大学图书馆",
-            "huantime": "2019-05-31 20:54:38",
-            "id": "",
-            "jitime": "2019-04-01 20:54:38",
-            "juanqi": "",
-            "lastday": 15,
-            "status": "正常",
-            "xujiecishu": "1",
-            "xujietime": ""
-          }
-        ],
-        "guoqi": 1,
-        "total": 1
-      }
+    data={"library": ""
+    }
+    async get_library(){
+       wepy.request({
+        url: "http://127.0.0.1:5000/api/library/info",
+        method: 'GET',
+        header:  {'Authorization':wx.getStorageSync('token')},
+        success: (res)=>{
+          this.library=res.data.data
+          this.$apply();
+          console.log(res.data)
+        },
+        fail: ()=>{}
+      }); 
+    }
+    async onLoad(){
+     this.get_library()
+     console.log(this.library)
     }
 
   }
